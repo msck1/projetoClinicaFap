@@ -5,7 +5,7 @@ const config = {
     host: 'localhost', // localhost significa que o servidor mysql esta sendo hospedado na sua maquina
     user: 'root', // seu usuario do mysql workbench
     password: 'root', // sua senha do mysql workbench
-    database: 'teste' // o nome do banco no mysql workbench que vamos usar
+    database: 'clinica' // o nome do banco no mysql workbench que vamos usar
 
 }
 
@@ -27,6 +27,7 @@ function fazerConexao() {
 } 
 
 // funcao teste de inserir no banco de dados, primeiro parametro é a coluna no banco de dados, os outros são de erro
+// funcao de exemplo, substituir depois
 
 function inserirUser(userNome:string, callback:(erro: mysql.QueryError | null, results?: any) => void) { 
 
@@ -43,3 +44,4 @@ function inserirUser(userNome:string, callback:(erro: mysql.QueryError | null, r
 }
 
 export { inserirUser }; // exporta a funcao para usarmos em outros arquivos .ts
+export { fazerConexao }
