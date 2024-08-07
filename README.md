@@ -3,3 +3,6 @@
 npm install readline-sync <br>
 npm install mysql <br>
 npm install typescript <br>
+
+
+\\angelica testando
