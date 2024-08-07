@@ -4,3 +4,5 @@ npm install readline-sync <br>
 npm install mysql2 <br>
 npm install typescript <br>
 npm install @types/node
+
+Para executar, substitua a config padrao do banco de dados pela sua e digite npm run start no console
