@@ -45,3 +45,5 @@ function inserirUser(userNome:string, callback:(erro: mysql.QueryError | null, r
 
 export { inserirUser }; // exporta a funcao para usarmos em outros arquivos .ts
 export { fazerConexao }
+
+// No arquivo db.ts, deve ficar apenas a const config e a funcao de fazer a conexa, a funcao de inserir esta ai por enquanto para fazer testes
