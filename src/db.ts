@@ -26,24 +26,5 @@ function fazerConexao() {
     return conexao;
 } 
 
-// funcao teste de inserir no banco de dados, primeiro parametro é a coluna no banco de dados, os outros são de erro
-// funcao de exemplo, substituir depois
-
-function inserirUser(userNome:string, callback:(erro: mysql.QueryError | null, results?: any) => void) { 
-
-    const conexao = fazerConexao(); // chamamos a funcao de conexao
-    const inserir = 'INSERT INTO user (userNome) VALUES (?)'; // const com o codigo em sql
-    conexao.query(inserir, [userNome], (erro,results) => { // codigo em sql vem pra essa funcao como parametro
-        conexao.end();
-        if (erro) {
-            callback(erro);
-        } else {
-            callback(null, results);
-        }
-    });
-}
-
-export { inserirUser }; // exporta a funcao para usarmos em outros arquivos .ts
-export { fazerConexao }
-
-// No arquivo db.ts, deve ficar apenas a const config e a funcao de fazer a conexa, a funcao de inserir esta ai por enquanto para fazer testes
+export { fazerConexao };
+// No arquivo db.ts, deve ficar apenas a const config e a funcao de fazer a conexa

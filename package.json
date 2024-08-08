@@ -13,9 +13,12 @@
   "license": "ISC",
   "dependencies": {
     "@types/node": "^22.1.0",
-    "@types/readline-sync": "^1.4.8",
     "mysql2": "^3.11.0",
+    "projetoclinicafap": "file:",
     "readline-sync": "^1.4.10",
     "typescript": "^5.5.4"
+  },
+  "devDependencies": {
+    "@types/readline-sync": "^1.4.8"
   }
 }
