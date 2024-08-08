@@ -5,9 +5,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const readline_sync_1 = __importDefault(require("readline-sync"));
 const medico_1 = require("./medicos/medico"); // importa do crud medicos
-let programa = true;
 function main() {
-    while (programa == true) {
+    function loop() {
         console.log(`
 ======================
          MENU
@@ -43,6 +42,7 @@ function main() {
                             else {
                                 console.log("Medico inserido com sucesso!");
                             }
+                            loop();
                         });
                         break;
                     case 2:
@@ -70,11 +70,12 @@ function main() {
                 break;
             case 5:
                 console.log("Programa finalizado");
-                programa = false;
             default:
                 console.log("Digite um valor valido");
                 break;
         } // fim do switch menu
-    } // fim do while
+        // fim do while
+    }
+    loop();
 }
 main();

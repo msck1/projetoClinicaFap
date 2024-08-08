@@ -21,6 +21,9 @@ function inserirMedico(nome_medico, especialidade_medico, crm_medico, callback) 
     });
 }
 function listarMedicos() {
+    const conexao = (0, db_1.fazerConexao)();
+    const query = 'SELECT * FROM medico';
+    conexao.query(query);
 }
 function listarMedicoPorCrm() {
 }

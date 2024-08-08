@@ -1,11 +1,13 @@
 import readlineSync from 'readline-sync'
-import { inserirMedico } from './medicos/medico'; // importa do crud medicos
+import { inserirMedico, listarMedicos } from './medicos/medico'; // importa do crud medicos
+import { Medico } from './medicos/medico';
 
-let programa:boolean = true;
 
 function main() {
 
-    while (programa == true) {
+    function loop() { // funcao loop para fazer o loop no menu, garante que a conexao com o bd seja feita de uma maneira mais 
+        
+   
 
 console.log(`
 ======================
@@ -42,7 +44,10 @@ console.log(`
         switch (opcaoMedico) {
             case 1:
 
-            // criar input do usuario aqui, seguindo a logica da classe medico
+            const nome_medico = readlineSync.question("Digite o nome do medico: ")
+            const especialidade_medico = readlineSync.question("Digite a especialidade do medico: ")
+            const crm_medico = readlineSync.question("Digite o crm do medico: ")
+            const novoMedico = new Medico () // inserir as const acima, falta o constructor
 
             inserirMedico('Daniel','Pediatra','123456-SP', (erro, resultado) => {
                 if (erro) {
@@ -54,7 +59,8 @@ console.log(`
                     console.log("Medico inserido com sucesso!")
                     
                 }
-            })
+                loop();
+            });
 
 
                 
@@ -100,7 +106,7 @@ break;
 
 
             console.log("Programa finalizado");
-            programa = false;
+            return;
             
             default:
 
@@ -108,8 +114,8 @@ break;
 
                 break;
         } // fim do switch menu
-    } // fim do while
-
+    }
+    loop() 
 }
 
 

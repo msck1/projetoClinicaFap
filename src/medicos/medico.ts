@@ -40,7 +40,7 @@ function inserirMedico(nome_medico:string, especialidade_medico:string, crm_medi
 function listarMedicos() {
 
     const conexao = fazerConexao();
-    const query = 'SELECT * FROM medico'
+    const query = 'SELECT * FROM medico' // falta terminar
     conexao.query(query,)
     
 }
@@ -57,4 +57,5 @@ function excluirMedicoPeloCrm() {
     
 }
 
-export { inserirMedico };
+export { inserirMedico, listarMedicos };
+export { Medico }
