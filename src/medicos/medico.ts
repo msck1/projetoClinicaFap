@@ -38,6 +38,10 @@ function inserirMedico(nome_medico:string, especialidade_medico:string, crm_medi
 }
 
 function listarMedicos() {
+
+    const conexao = fazerConexao();
+    const query = 'SELECT * FROM medico'
+    conexao.query(query,)
     
 }
 
