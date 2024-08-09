@@ -3,9 +3,10 @@ import { fazerConexao } from '../db';
 
 class Medico {
 
-    private nome_medico:string;
-    private especialidade_medico:string;
-    private crm_medico:string;
+    //private id_medico:number;
+    //private nome_medico:string;
+    //private especialidade_medico:string;
+    //private crm_medico:string;
 
     constructor() {
         
@@ -17,7 +18,7 @@ class Medico {
 
 }
 
-// funcao de inserir,
+// funcao de inserir, trocar por a query.() depois para os metods get, parametro da funcao inserirMedico 
 function inserirMedico(nome_medico:string, especialidade_medico:string, crm_medico:string, callback:(erro: mysql.QueryError | null, resultado?:any) =>  void) {
     
     const conexao = fazerConexao();
@@ -37,15 +38,22 @@ function inserirMedico(nome_medico:string, especialidade_medico:string, crm_medi
 
 }
 
-function listarMedicos() {
+function listarMedicoPorCrm(crm_medico:string, callback:(erro: mysql.QueryError | null, resultado?:any) => void) {
 
     const conexao = fazerConexao();
-    const query = 'SELECT * FROM medico' // falta terminar
-    conexao.query(query,)
-    
-}
+    const query = 'SELECT * FROM medico WHERE crm_medico = ?';
+    conexao.query(query, crm_medico,(erro,resultado) => {
 
-function listarMedicoPorCrm() {
+        if (erro) {
+
+            callback(erro)
+            
+        } else {
+
+            callback(null, resultado)
+            
+        }
+    })
     
 }
 
@@ -57,5 +65,5 @@ function excluirMedicoPeloCrm() {
     
 }
 
-export { inserirMedico, listarMedicos };
+export { inserirMedico, listarMedicoPorCrm };
 export { Medico }
