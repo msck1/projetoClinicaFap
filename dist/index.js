@@ -3,8 +3,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const readline_sync_1 = __importDefault(require("readline-sync"));
+const readline_sync_1 = __importDefault(require("readline-sync")); // import do readlinesync
 const medico_1 = require("./medicos/medico"); // importa do crud medicos
+const medico_2 = require("./medicos/medico"); // import da classe medico
 function main() {
     function loop() {
         console.log(`
@@ -33,11 +34,11 @@ function main() {
                 let opcaoMedico = readline_sync_1.default.questionInt("Digite a sua opcao:");
                 switch (opcaoMedico) {
                     case 1:
-                        //const nome_medico = readlineSync.question("Digite o nome do medico: ");
-                        //const especialidade_medico = readlineSync.question("Digite a especialidade do medico: ");
-                        //const crm_medico = readlineSync.question("Digite o crm do medico: ");
-                        //const novoMedico = new Medico (); // inserir as const acima, falta o constructor
-                        (0, medico_1.inserirMedico)('Daniel', 'Pediatra', '12345-SP', (erro, resultado) => {
+                        const nome_medico = readline_sync_1.default.question("Digite o nome do medico: ");
+                        const especialidade_medico = readline_sync_1.default.question("Digite a especialidade do medico: ");
+                        const crm_medico = readline_sync_1.default.question("Digite o crm do medico: ");
+                        const novoMedico = new medico_2.Medico(0, nome_medico, especialidade_medico, crm_medico);
+                        (0, medico_1.inserirMedico)(novoMedico, (erro, resultado) => {
                             if (erro) {
                                 console.error("Erro ao inserir o medico", erro);
                             }
@@ -48,7 +49,8 @@ function main() {
                         });
                         break;
                     case 2:
-                        (0, medico_1.listarMedicoPorCrm)('123456-SP', (erro, resultado) => {
+                        const medicoCrmBuscar = readline_sync_1.default.question("Digite o CRM do medico: ");
+                        (0, medico_1.listarMedicoPorCrm)(medicoCrmBuscar, (erro, resultado) => {
                             if (erro) {
                                 console.error("Erro ao buscar o medico", erro);
                             }
@@ -57,6 +59,63 @@ function main() {
                             }
                             loop();
                         });
+                        break;
+                    case 3:
+                        const medicoCrmAntigo = readline_sync_1.default.question("Digite o CRM do medico que deseja alterar: ");
+                        const medicoNomeNovo = readline_sync_1.default.question("Digite o nome novo do medico: ");
+                        const medicoEspecialidadeNova = readline_sync_1.default.question("Digite a especialidade nova: ");
+                        const medicoCrmNovo = readline_sync_1.default.question("Digite o CRM novo do medico: ");
+                        const medicoAtualizado = new medico_2.Medico(0, medicoNomeNovo, medicoEspecialidadeNova, medicoCrmNovo);
+                        (0, medico_1.alterarMedicoPeloCrm)(medicoCrmAntigo, medicoAtualizado, (erro, resultado) => {
+                            if (erro) {
+                                console.error(erro);
+                            }
+                            else {
+                                console.log("Medico atualizado com sucesso", resultado);
+                            }
+                            loop();
+                        });
+                        break;
+                    case 4:
+                        let medicoCrmExcluir = readline_sync_1.default.question("Digite o CRM do medico que deseja excluir: ");
+                        (0, medico_1.excluirMedicoPeloCrm)(medicoCrmExcluir, (erro, resultado) => {
+                            if (erro) {
+                                console.error(erro);
+                            }
+                            else {
+                                console.log("Medico excluido com sucesso: ", resultado);
+                            }
+                            loop();
+                        });
+                        break;
+                    case 5:
+                        loop();
+                        break;
+                    default:
+                        console.log("Digite um valor valido");
+                        loop();
+                        break;
+                }
+                // break do switch medico
+                break;
+            case 2:
+                console.log(`
+======================
+         MENU
+1. Inserir um paciente
+2. Listar paciente pelo CPF
+3. Alterar paciente pelo CPF
+4. Excluir paciente pelo CPF
+5. Voltar
+======================
+`);
+                const opcaoPaciente = readline_sync_1.default.questionInt("Digite a sua opcao: ");
+                switch (opcaoPaciente) {
+                    case 1:
+                        loop();
+                        break;
+                    case 2:
+                        loop();
                         break;
                     case 3:
                         loop();
@@ -72,12 +131,9 @@ function main() {
                         loop();
                         break;
                 }
-                // break do switch medico
+                // break do switch paciente
                 break;
-            // fazer o resto do switch pacientes,consulta,etc...
-            case 2:
-                loop();
-                break;
+            // falta fazer o resto do switch constula,etc...
             case 3:
                 loop();
                 break;

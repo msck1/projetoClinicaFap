@@ -1,11 +1,11 @@
-import readlineSync from 'readline-sync'
-import { inserirMedico, listarMedicoPorCrm } from './medicos/medico'; // importa do crud medicos
-import { Medico } from './medicos/medico';
+import readlineSync from 'readline-sync' // import do readlinesync
+import { inserirMedico, listarMedicoPorCrm, alterarMedicoPeloCrm, excluirMedicoPeloCrm } from './medicos/medico'; // importa do crud medicos
+import { Medico } from './medicos/medico'; // import da classe medico
 
 
 function main() {
 
-    function loop() { // funcao loop para fazer o loop no menu, garante que a conexao com o bd seja feita de uma maneira mais 
+    function loop() { // funcao loop para fazer o loop no menu, garante que a conexao com o bd seja feita sem precisar sair do loop, a funcao loop deve ser chamada no fim da funcao crud
         
    
 
@@ -43,12 +43,12 @@ console.log(`
         switch (opcaoMedico) {
             case 1:
 
-            //const nome_medico = readlineSync.question("Digite o nome do medico: ");
-            //const especialidade_medico = readlineSync.question("Digite a especialidade do medico: ");
-            //const crm_medico = readlineSync.question("Digite o crm do medico: ");
-            //const novoMedico = new Medico (); // inserir as const acima, falta o constructor
+            const nome_medico = readlineSync.question("Digite o nome do medico: ");
+            const especialidade_medico = readlineSync.question("Digite a especialidade do medico: ");
+            const crm_medico = readlineSync.question("Digite o crm do medico: ");
+            const novoMedico = new Medico (0, nome_medico, especialidade_medico, crm_medico,); 
 
-            inserirMedico('Daniel','Pediatra','12345-SP', (erro, resultado) => {
+            inserirMedico(novoMedico, (erro, resultado) => {
                 if (erro) {
             
                     console.error("Erro ao inserir o medico", erro);
@@ -66,10 +66,9 @@ console.log(`
                 break;
             case 2:
 
-                // fazer o mesmo input de usuario de inserirMedico
+                const medicoCrmBuscar = readlineSync.question("Digite o CRM do medico: ")
 
-
-                listarMedicoPorCrm('123456-SP', (erro, resultado) => {
+                listarMedicoPorCrm(medicoCrmBuscar, (erro, resultado) => {
                     
                     if (erro) {
 
@@ -86,12 +85,45 @@ console.log(`
             
                 break;
             case 3:
+                const medicoCrmAntigo = readlineSync.question("Digite o CRM do medico que deseja alterar: ")
+                const medicoNomeNovo = readlineSync.question("Digite o nome novo do medico: ")
+                const medicoEspecialidadeNova = readlineSync.question("Digite a especialidade nova: ")
+                const medicoCrmNovo = readlineSync.question("Digite o CRM novo do medico: ")
+                const medicoAtualizado = new Medico (0, medicoNomeNovo, medicoEspecialidadeNova, medicoCrmNovo)
+                alterarMedicoPeloCrm(medicoCrmAntigo, medicoAtualizado, (erro, resultado) => {
 
-                loop();
+                    if (erro) {
+
+                        console.error(erro)
+                        
+                    } else {
+
+                        console.log("Medico atualizado com sucesso", resultado)
+                        
+                    }
+                    loop();
+                })
+
+
                 break;
             case 4:
 
-                loop();
+            let medicoCrmExcluir = readlineSync.question("Digite o CRM do medico que deseja excluir: ")
+
+                excluirMedicoPeloCrm(medicoCrmExcluir, (erro, resultado) => {
+
+                    if (erro) {
+
+                        console.error(erro)
+                        
+                    } else {
+
+                        console.log("Medico excluido com sucesso: ",resultado)
+                        
+                    }
+                    loop();
+                })
+
                 break;
             case 5:
                 loop();
@@ -107,12 +139,54 @@ console.log(`
 // break do switch medico
 break;
 
-// fazer o resto do switch pacientes,consulta,etc...
+
 
             case 2:
+console.log(`
+======================
+         MENU
+1. Inserir um paciente
+2. Listar paciente pelo CPF
+3. Alterar paciente pelo CPF
+4. Excluir paciente pelo CPF
+5. Voltar
+======================
+`)
 
-                loop();
-                break;
+    const opcaoPaciente = readlineSync.questionInt("Digite a sua opcao: ")
+
+    switch (opcaoPaciente) {
+        case 1:
+
+            loop();
+            break;
+        case 2:
+
+            loop();
+            break;
+        case 3:
+
+            loop();
+            break;
+        case 4:
+
+            loop();
+            break;
+        case 5:
+
+            loop();
+            break;
+        default:
+
+        console.log("Digite um valor valido")
+        loop();
+            break;
+}
+// break do switch paciente
+break;
+
+// falta fazer o resto do switch constula,etc...
+
             case 3:
                 loop();
                 break;
