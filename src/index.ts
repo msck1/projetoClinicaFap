@@ -1,7 +1,8 @@
 import readlineSync from 'readline-sync' // import do readlinesync
 import { inserirMedico, listarMedicoPorCrm, alterarMedicoPeloCrm, excluirMedicoPeloCrm } from './medicos/medico'; // importa do crud medicos
 import { Medico } from './medicos/medico'; // import da classe medico
-
+import { alterarConsultaPeloID, excluirConsultaPeloId, inserirConsulta, listarConsultaPeloId } from './consulta/consulta' // import de crud consulta
+import { Consulta } from './consulta/consulta' // import da classe consulta
 
 function main() {
 
@@ -37,7 +38,7 @@ console.log(`
 ======================
 `)
 
-    let opcaoMedico = readlineSync.questionInt("Digite a sua opcao:");
+    const opcaoMedico = readlineSync.questionInt("Digite a sua opcao:");
 
 
         switch (opcaoMedico) {
@@ -94,11 +95,11 @@ console.log(`
 
                     if (erro) {
 
-                        console.error(erro)
+                        console.error(erro);
                         
                     } else {
 
-                        console.log("Medico atualizado com sucesso", resultado)
+                        console.log("Medico atualizado com sucesso", resultado);
                         
                     }
                     loop();
@@ -114,11 +115,11 @@ console.log(`
 
                     if (erro) {
 
-                        console.error(erro)
+                        console.error(erro);
                         
                     } else {
 
-                        console.log("Medico excluido com sucesso: ",resultado)
+                        console.log("Medico excluido com sucesso: ",resultado);
                         
                     }
                     loop();
@@ -153,34 +154,34 @@ console.log(`
 ======================
 `)
 
-    const opcaoPaciente = readlineSync.questionInt("Digite a sua opcao: ")
+    const opcaoPaciente = readlineSync.questionInt("Digite a sua opcao: ");
 
-    switch (opcaoPaciente) {
-        case 1:
-
-            loop();
-            break;
-        case 2:
+        switch (opcaoPaciente) {
+            case 1:
 
             loop();
-            break;
-        case 3:
+                break;
+            case 2:
 
             loop();
-            break;
-        case 4:
+                break;
+            case 3:
 
             loop();
-            break;
-        case 5:
+                break;
+            case 4:
 
             loop();
-            break;
-        default:
+                break;
+            case 5:
 
-        console.log("Digite um valor valido")
+            loop();
+                break;
+            default:
+
+        console.log("Digite um valor valido");
         loop();
-            break;
+                break;
 }
 // break do switch paciente
 break;
@@ -188,9 +189,77 @@ break;
 // falta fazer o resto do switch constula,etc...
 
             case 3:
+console.log(`
+======================
+         MENU
+1. Inserir uma consulta
+2. Listar consulta pelo id
+3. Alterar consulta pelo id
+4. Excluir consulta pelo id
+5. Voltar
+======================
+`)
+
+    const opcaoConsulta = readlineSync.questionInt("Digite a sua opcao: ");
+
+
+        switch (opcaoConsulta) {
+            case 1:
+
+                const datahora = new Date(readlineSync.question("Digite a data e a hora da consulta(FORMATO AAAA-MM-DD HH:MM:SS): "))
+                const descricao = readlineSync.question("Digite a descricao da consulta: ")
+                const cpf_pacienteConsulta = readlineSync.question("Digite o CPF do paciente: ")
+                const crm_medicoConsulta = readlineSync.question("Digite o CRM do medico: ")
+                const novaConsulta = new Consulta(0, datahora, descricao, 0, 0);
+
+                inserirConsulta(novaConsulta, crm_medicoConsulta, cpf_pacienteConsulta, (erro, resultado) => {
+                    if (erro) {
+
+                        console.error('Erro ao criar a consulta:', erro);
+
+                    } else {
+
+                        console.log('Consulta criada com sucesso:', resultado);
+                    
+                    }
+                    loop();
+                });
+
+            
+            break;
+        case 2:
+
+                listarConsultaPeloId();
+
                 loop();
-                break;
+            break;
+        case 3:
+
+                alterarConsultaPeloID();
+
+                loop();
+            break;
+        case 4:
+
+                excluirConsultaPeloId();
+
+                loop();
+            break;
+        case 5:
+
+            loop();
+            break;
+        default:
+
+            console.log("Digite um valor valido");
+            loop();
+            break;
+}
+// break do switch consulta
+break;
+
             case 4:
+
                 loop();
                 break;
             case 5:

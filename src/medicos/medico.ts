@@ -12,36 +12,36 @@ class Medico {
     private crm_medico:string;
 
         constructor(_id_medico:number, _nome_medico:string, _especialidade_medico:string, _crm_medico:string) {
-        this.id_medico =_id_medico
-        this.nome_medico = _nome_medico
-        this.especialidade_medico = _especialidade_medico
-        this.crm_medico = _crm_medico
+        this.id_medico =_id_medico;
+        this.nome_medico = _nome_medico;
+        this.especialidade_medico = _especialidade_medico;
+        this.crm_medico = _crm_medico;
         }
         
         //Setters
-            setid_medico(_id_medico:number): void {
+            public setid_medico(_id_medico:number): void {
             this.id_medico = _id_medico
         }
-            setnome_medico(_nome_medico:string): void {
+            public setnome_medico(_nome_medico:string): void {
             this.nome_medico = _nome_medico
         }
-            setespecialidade_medico(_especialidade_medico:string): void {
+            public setespecialidade_medico(_especialidade_medico:string): void {
             this.especialidade_medico = _especialidade_medico
         }
-            setcrm_medico(_crm_medico:string): void {
+            public setcrm_medico(_crm_medico:string): void {
             this.crm_medico = _crm_medico
         }
         //Getters
-            getidnome_medico(): number{
+            public getidnome_medico(): number{
             return this.id_medico
         }
-            getnome_medico(): string {
+            public getnome_medico(): string {
             return this.nome_medico
         }
-            getespecialidade_medico(): string {
+            public getespecialidade_medico(): string {
             return this.especialidade_medico
         }
-            getcrm_medico(): string {
+            public getcrm_medico(): string {
             return this.crm_medico
         }
         }

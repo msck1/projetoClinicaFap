@@ -6,6 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const readline_sync_1 = __importDefault(require("readline-sync")); // import do readlinesync
 const medico_1 = require("./medicos/medico"); // importa do crud medicos
 const medico_2 = require("./medicos/medico"); // import da classe medico
+const consulta_1 = require("./consulta/consulta");
+const consulta_2 = require("./consulta/consulta");
 function main() {
     function loop() {
         console.log(`
@@ -31,7 +33,7 @@ function main() {
 5. Voltar
 ======================
 `);
-                let opcaoMedico = readline_sync_1.default.questionInt("Digite a sua opcao:");
+                const opcaoMedico = readline_sync_1.default.questionInt("Digite a sua opcao:");
                 switch (opcaoMedico) {
                     case 1:
                         const nome_medico = readline_sync_1.default.question("Digite o nome do medico: ");
@@ -135,7 +137,55 @@ function main() {
                 break;
             // falta fazer o resto do switch constula,etc...
             case 3:
-                loop();
+                console.log(`
+======================
+         MENU
+1. Inserir uma consulta
+2. Listar consulta pelo id
+3. Alterar consulta pelo id
+4. Excluir consulta pelo id
+5. Voltar
+======================
+`);
+                const opcaoConsulta = readline_sync_1.default.questionInt("Digite a sua opcao: ");
+                switch (opcaoConsulta) {
+                    case 1:
+                        const datahora = new Date(readline_sync_1.default.question("Digite a data e a hora da consulta(FORMATO AAAA-MM-DD HH:MM:SS): "));
+                        const descricao = readline_sync_1.default.question("Digite a descricao da consulta: ");
+                        const cpf_pacienteConsulta = readline_sync_1.default.question("Digite o CPF do paciente: ");
+                        const crm_medicoConsulta = readline_sync_1.default.question("Digite o CRM do medico: ");
+                        const novaConsulta = new consulta_2.Consulta(0, datahora, descricao, 0, 0);
+                        (0, consulta_1.inserirConsulta)(novaConsulta, crm_medicoConsulta, cpf_pacienteConsulta, (erro, resultado) => {
+                            if (erro) {
+                                console.error('Erro ao criar a consulta:', erro);
+                            }
+                            else {
+                                console.log('Consulta criada com sucesso:', resultado);
+                            }
+                            loop();
+                        });
+                        break;
+                    case 2:
+                        (0, consulta_1.listarConsultaPeloId)();
+                        loop();
+                        break;
+                    case 3:
+                        (0, consulta_1.alterarConsultaPeloID)();
+                        loop();
+                        break;
+                    case 4:
+                        (0, consulta_1.excluirConsultaPeloId)();
+                        loop();
+                        break;
+                    case 5:
+                        loop();
+                        break;
+                    default:
+                        console.log("Digite um valor valido");
+                        loop();
+                        break;
+                }
+                // break do switch consulta
                 break;
             case 4:
                 loop();
