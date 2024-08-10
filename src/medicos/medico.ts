@@ -1,6 +1,5 @@
 //SISTEMA PARA IMPLEMENTAR E GFERENCIAAR OS MÉDICOS, PACIENTES E CONSULTAS DE UMA CLÍNICA.
 //CÓDIGO PARA CLASSE DE TELEFONE DE PACIENTE PARA O PROGRAMA DA CLINICA FAP
-
 const readline = require('readline-sync');//permitir a interação síncrona com o usuário através do console
 
 import mysql from 'mysql2'
@@ -37,19 +36,19 @@ class Medico {
             getidnome_medico(){
             return this.id_nome
         }
-            getnome_paciente() {
-            return this.nome_paciente
+            getnome_medicoe() {
+            return this.nome_medico
         }
-            getespecialidade_paciente() {
-            return this.especialidade_paciente
+            getespecialidade_medico() {
+            return this.especialidade_medico
         }
-            getcrm_paciente() {
-            return this.crm_paciente
+            getcrm_medico() {
+            return this.crm_medico
         }
         }
             
 
-// funcao de inserir, trocar por a query.() depois para os metods get, parametro da funcao inserirMedico 
+// funcao de inserir, trocar por a query.() depois para os metodos get, parametro da funcao inserirMedico 
 function inserirMedico(nome_medico:string, especialidade_medico:string, crm_medico:string, callback:(erro: mysql.QueryError | null, resultado?:any) =>  void) {
     
     const conexao = fazerConexao();
@@ -69,6 +68,7 @@ function inserirMedico(nome_medico:string, especialidade_medico:string, crm_medi
 
 }
 
+// funcao de listar: busca os parametros pelo crm do medico 
 function listarMedicoPorCrm(crm_medico:string, callback:(erro: mysql.QueryError | null, resultado?:any) => void) {
 
     const conexao = fazerConexao();
@@ -88,58 +88,50 @@ function listarMedicoPorCrm(crm_medico:string, callback:(erro: mysql.QueryError 
     
 }
 
-function alterarMedicoPeloCrm() {
+// funcao de alterar: busca pelo crm do medico, para alterar os parametros desejados 
+function alterarMedicoPeloCrm(nome_medico:string, especialidade_medico:string, crm_medico:string, callback:(erro: mysql.QueryError | null, resultado?:any) =>  void) {
     
+    const conexao = fazerConexao();
+    const alterar = 'UPDATE * FROM medico WHERE crm_medico = ?';
+    conexao.query(alterar,  [nome_medico, especialidade_medico, crm_medico], (erro, resultado) => {
+
+        if (erro) {
+
+            callback(erro);
+            
+        } else {
+
+            callback(null, resultado);
+            
+        }
+    })
+
 }
 
+
+// funcao de excluir: busca pelo crm do medico, para remover o medico 
 function excluirMedicoPeloCrm() {
     
+    const conexao = fazerConexao();
+    const excluir = 'DELETE * FROM medico WHERE crm_medico = ?';
+    conexao.query(excluir,  [nome_medico, especialidade_medico, crm_medico], (erro, resultado) => {
+
+        if (erro) {
+
+            callback(erro);
+            
+        } else {
+
+            callback(null, resultado);
+            
+        }
+    })
+
 }
 
-export { inserirMedico, listarMedicoPorCrm };
+
+export { inserirMedico, listarMedicoPorCrm, alterarMedicoPorCrm, excluirMedicoPorCrm  };
 export { Medico }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
