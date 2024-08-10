@@ -43,7 +43,7 @@ class Medico {
             getespecialidade_paciente() {
             return this.especialidade_paciente
         }
-            getespecialidade_paciente() {
+            getcrm_paciente() {
             return this.crm_paciente
         }
         }
