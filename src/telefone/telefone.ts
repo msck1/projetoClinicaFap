@@ -1,7 +1,7 @@
 
+const readline = require('readline-sync'); // Permitir a interação síncrona com o usuário através do console
 import mysql from 'mysql2';
 import { fazerConexao } from '../db';
-import readline from 'readline-sync';
 
 // Declaração da Classe Telefone
 class Telefone {
@@ -10,12 +10,7 @@ class Telefone {
     private celular_paciente: number;
     private paciente_id_paciente: number;
 
-    constructor(
-        _idtelefone_paciente: number,
-        _residencial_paciente: number,
-        _celular_paciente: number,
-        _paciente_id_paciente: number
-    ) {
+    constructor(_idtelefone_paciente: number, _residencial_paciente: number, _celular_paciente: number, _paciente_id_paciente: number) {
         this.idtelefone_paciente = _idtelefone_paciente;
         this.residencial_paciente = _residencial_paciente;
         this.celular_paciente = _celular_paciente;
@@ -23,87 +18,97 @@ class Telefone {
     }
 
     // Setters
-    setPacienteIdPaciente(_paciente_id_paciente: number) {
-        this.paciente_id_paciente = _paciente_id_paciente;
-    }
-
-    setIdTelefonePaciente(_idtelefone_paciente: number) {
+   
+        setIdTelefonePaciente(_idtelefone_paciente: number) {
         this.idtelefone_paciente = _idtelefone_paciente;
     }
 
-    setCelularPaciente(_celular_paciente: number) {
+        setCelularPaciente(_celular_paciente: number) {
         this.celular_paciente = _celular_paciente;
     }
 
-    setResidencialPaciente(_residencial_paciente: number) {
+        setResidencialPaciente(_residencial_paciente: number) {
         this.residencial_paciente = _residencial_paciente;
+    }
+        setPacienteIdPaciente(_paciente_id_paciente: number) {
+        this.paciente_id_paciente = _paciente_id_paciente;
     }
 
     // Getters
-    getPacienteIdPaciente() {
-        return this.paciente_id_paciente;
-    }
-
-    getIdTelefonePaciente() {
+   
+        getIdTelefonePaciente() {
         return this.idtelefone_paciente;
     }
-
-    getCelularPaciente() {
+    
+        getCelularPaciente() {
         return this.celular_paciente;
     }
 
-    getResidencialPaciente() {
+        getResidencialPaciente() {
         return this.residencial_paciente;
     }
+        getPacienteIdPaciente() {
+        return this.paciente_id_paciente;
+    }
+
 }
 
-// Função para inserir
+// Função de inserir
 function inserirTelefonePaciente(telefone: Telefone, callback: (erro: mysql.QueryError | null, resultado?: any) => void) {
     const conexao = fazerConexao();
-    const inserir = 'INSERT INTO telefone (paciente_id_paciente, celular_paciente, residencial_paciente) VALUES (?, ?, ?)';
-    conexao.query(inserir, [
-        telefone.getPacienteIdPaciente(),
-        telefone.getCelularPaciente(),
-        telefone.getResidencialPaciente()
-], (erro, resultado) => {
-        conexao.end();
-        callback(erro, resultado);
+    const inserirTelefone = 'INSERT INTO telefone (celular_paciente, residencial_paciente, paciente_id_paciente) VALUES (?, ?, (SELECT id_paciente FROM paciente WHERE cpf_paciente = ?)))';
+    conexao.query(inserirTelefone, [telefone.getcelular_Paciente(), telefone.getresidencial_Paciente(), cpf_paciente], (erro, resultado) => {
+        conexao.end(); // Fechar a conexão após a operação
+        if (erro) {
+            callback(erro);
+        } else {
+            callback(null, resultado);
+        }
     });
 }
 
-// Função para listar pelo Id do Paciente
-function listarTelefonePorIdPaciente(paciente_id_paciente: number, callback: (erro: mysql.QueryError | null, resultado?: any) => void) {
+// Função de listar pelo cpf do Paciente
+function listarTelefonePorCpfpaciente(paciente_id_paciente: number, callback: (erro: mysql.QueryError | null, resultado?: any) => void) {
     const conexao = fazerConexao();
     const query = 'SELECT * FROM telefone WHERE paciente_id_paciente = ?';
     conexao.query(query, [paciente_id_paciente], (erro, resultado) => {
-        conexao.end();
-        callback(erro, resultado);
+        conexao.end(); // Fechar a conexão após a operação
+        if (erro) {
+            callback(erro);
+        } else {
+            callback(null, resultado);
+        }
     });
 }
 
-// Função para alterar
-function alterarTelefonePorIdPaciente(telefone: Telefone, callback: (erro: mysql.QueryError | null, resultado?: any) => void) {
+// Função de alterarCpfPaciente(telefone: Telefone, callback: (erro: mysql.QueryError | null, resultado?: any) => void) {
     const conexao = fazerConexao();
-    const alterar = 'UPDATE telefone SET celular_paciente = ?, residencial_paciente = ? WHERE paciente_id_paciente = ?';
-    conexao.query(alterar, [
-        telefone.getCelularPaciente(),
-        telefone.getResidencialPaciente(),
-        telefone.getPacienteIdPaciente()
-    ], (erro, resultado) => {
-        conexao.end();
-        callback(erro, resultado);
+    const alterarTelefone = 'UPDATE telefone SET idtelefone_paciente = ?, celular_paciente = ?, residencial_paciente = ? WHERE cpf_paciente = ?';
+    conexao.query(alterarTelefone, [telefone.getPacienteIdPaciente(), telefone.getCelularPaciente(), telefone.getResidencialPaciente()], (erro, resultado) => {
+        conexao.end(); // Fechar a conexão após a operação
+        if (erro) {
+            callback(erro);
+        } else {
+            callback(null, resultado);
+        }
     });
 }
 
-// Função para excluir
-function excluirTelefonePorIdPaciente(paciente_id_paciente: number, callback: (erro: mysql.QueryError | null, resultado?: any) => void) {
+// Função de excluir
+function excluirTelefonePorCpfPaciente(idtelefone_paciente: number, callback: (erro: mysql.QueryError | null, resultado?: any) => void) {
     const conexao = fazerConexao();
-    const excluir = 'DELETE FROM telefone WHERE paciente_id_paciente = ?';
-    conexao.query(excluir, [paciente_id_paciente], (erro, resultado) => {
-        conexao.end();
-        callback(erro, resultado);
+    const excluirTelefone = 'DELETE FROM telefone WHERE cpf_paciente = ?';
+    conexao.query(excluirTelefone, [idtelefone_paciente], (erro, resultado) => {
+        conexao.end(); // Fechar a conexão após a operação
+        if (erro) {
+            callback(erro);
+        } else {
+            callback(null, resultado);
+        }
     });
 }
 
-export { inserirTelefonePaciente, listarTelefonePorIdPaciente, alterarTelefonePorIdPaciente, excluirTelefonePorIdPaciente };
+
+
+export { inserirTelefonePaciente, listarTelefonePorCpfpaciente, alterarTelefonePorCpfPaciente, excluirTelefonePorCpfPaciente };
 export { Telefone };
