@@ -1,3 +1,4 @@
+
 import mysql from 'mysql2';
 import { fazerConexao } from '../db';
 import readline from 'readline-sync';
@@ -64,7 +65,7 @@ function inserirTelefonePaciente(telefone: Telefone, callback: (erro: mysql.Quer
         telefone.getPacienteIdPaciente(),
         telefone.getCelularPaciente(),
         telefone.getResidencialPaciente()
-    ], (erro, resultado) => {
+], (erro, resultado) => {
         conexao.end();
         callback(erro, resultado);
     });
