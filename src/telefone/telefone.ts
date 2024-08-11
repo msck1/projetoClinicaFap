@@ -1,4 +1,3 @@
-
 const readline = require('readline-sync'); // Permitir a interação síncrona com o usuário através do console
 import mysql from 'mysql2';
 import { fazerConexao } from '../db';
@@ -81,7 +80,8 @@ function listarTelefonePorCpfpaciente(paciente_id_paciente: number, callback: (e
     });
 }
 
-// Função de alterarCpfPaciente(telefone: Telefone, callback: (erro: mysql.QueryError | null, resultado?: any) => void) {
+//Função de alterar pelo Cpf do Paciente
+function alterarCpfPaciente(telefone: Telefone, callback: (erro: mysql.QueryError | null, resultado?: any) => void) {
     const conexao = fazerConexao();
     const alterarTelefone = 'UPDATE telefone SET idtelefone_paciente = ?, celular_paciente = ?, residencial_paciente = ? WHERE cpf_paciente = ?';
     conexao.query(alterarTelefone, [telefone.getPacienteIdPaciente(), telefone.getCelularPaciente(), telefone.getResidencialPaciente()], (erro, resultado) => {
