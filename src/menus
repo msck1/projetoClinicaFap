@@ -1,0 +1,156 @@
+//SISTEMA PARA IMPLEMENTAR E GERENCIAR OS MÉDICOS, PACIENTES E CONSULTAS DE UMA CLÍNICA.
+//LINGUAGEM: JAVASCRIPT
+
+const readline = require('readline-sync');//permitir a interação síncrona com o usuário através do console
+
+import readline from 'readline-sync';
+import { fazerConexao } from './db';
+
+// Menu Principal
+function menu_principal() {
+    console.clear();
+    console.log(" ================ FAP - FORMACAO ACELERADA DE PROGRAMACAO ===============");
+    console.log(" =========  PROFESSOR: ANDRE RIBEIRO / DISCIPLINA: JAVA SCRIPT  =========");
+    console.log(" ===================   S.G.C.->  SISTEMA DE GERENCIAMENTO DA CLINICA  FAP  ================ ");
+    console.log(" OBJETIVO:Cadastrar,Consultar,Alterar,Remover:MÉDICOS/CONSULTAS/PACIENTES");
+    console.log("\n ================  ESCOLHA UMA OPCAO VALIDA (0 à 3):   ============== \n");
+    console.log("1 - MENU MÉDICO");
+    console.log("2 - MENU PACIENTE");
+    console.log("3 - MENU CONSULTA");
+    console.log("0 - SAIR");
+
+    let opcaomenu = readline.questionInt("\n Qual a opcao desejada? ");
+
+    switch (opcaomenu) {
+        case 1:
+            menu_medico();
+            break;
+        case 2:
+            menu_paciente();
+            break;
+        case 3:
+            menu_consulta();
+            break;
+        case 0:
+            console.log("Saída realizada com sucesso");
+            return;
+        default:
+            console.log("Opção inválida. Escolha outra opção.");
+            break;
+    }
+    menu_principal(); // Chama o menu novamente para nova escolha do usuário
+}
+
+//*******************************************************************************************
+//========== MENU MEDICO-permite ao usuário escolher uma opção
+function menu_medico() {
+    console.log(" ============ SISTEMA DE CLINICA - MENU MÉDICO ============ ");
+    console.log(" ============ ESCOLHA UMA OPCAO VALIDA(0 à 4): ===========\n");
+    console.log("\n1 - Incluir Médico");
+    console.log("2 - Alterar Médico");
+    console.log("3 - Remover Médico");
+    console.log("4 - Listar Médicos Cadasttrados");
+    console.log("0 - Sair");
+
+    let opcaomenu = parseInt(readline.questionInt("Qual a opcao desejada? "));
+
+    switch (opcaomenu) {
+        case 1:
+            incluir_medico();//Chama e executa a função para adicionar um Médico
+            break;
+        case 2:
+            alterar_medico();//Chama e executa a função para alterar um Médico
+            break;
+        case 3:
+            remover();//Chama e executa a função para remover um Médico
+            break;
+        case 4:
+            listar();//Chama e executa a função para listar um Médico
+            break;
+        case 0:
+            console.log("Saida realizada com Sucesso");
+            return;
+        default:
+             console.log("Opcao invalida. Escolha outra opcao.");
+             break;
+        }
+    
+        
+        menu();// Chama o menu novamente para nova escolha do usuário
+    }
+
+
+//*******************************************************************************************
+//========== MENU PACIENTE-permite ao usuário escolher uma opção
+function menu_paciente() {
+    console.log(" ============ SISTEMA DE CLINICA - MENU PACIENTE ============ ");
+    console.log(" ============ ESCOLHA UMA OPCAO VALIDA(0 à 4): ===========\n");
+    console.log("\n1 - Incluir Paciente");
+    console.log("2 - Alterar Paciente");
+    console.log("3 - Remover Paciente");
+    console.log("4 - Listar Pacientes Cadastrados");
+    console.log("0 - Sair");
+
+    let opcaomenu = parseInt(readline.questionInt("Qual a opcao desejada? "));
+
+    switch (opcaomenu) {
+        case 1:
+            incluir_paciente();//Chama e executa a função para adicionar um Paciente
+            break;
+        case 2:
+            alterar_paciente();//Chama e executa a função para alterar um Paciente
+            break;
+        case 3:
+            remover_paciente();//Chama e executa a função para remover um Paciente
+            break;
+        case 4:
+            listar_paciente();//Chama e executa a função para listar Paciente
+            break;
+        case 0:
+            console.log("Saida realizada com Sucesso");
+            return;
+        default:
+             console.log("Opcao invalida. Escolha outra opcao.");
+             break;
+        }
+             menu();// Chama o menu novamente para nova escolha do usuário
+    }
+
+
+//*******************************************************************************************
+//========== MENU CONSULTA-permite ao usuário escolher uma opção
+function menu_consulta() {
+    console.log(" ============ SISTEMA DE CLINICA - MENU CONSULTA ============ ");
+    console.log(" ============ ESCOLHA UMA OPCAO VALIDA(0 à 4): ===========\n");
+    console.log("\n1 - Agendar Consulta");
+    console.log("2 - Alterar Consulta");
+    console.log("3 - Cancelar Consulta");
+    console.log("4 - Listar Consultas Realizadas");
+    console.log("0 - Sair");
+
+    let opcaomenu = parseInt(readline.questionInt("Qual a opcao desejada? "));
+
+    switch (opcaomenu) {
+        case 1:
+            agendar_consulta();//Chama e executa a função para agendar uma Consulta
+            break;
+        case 2:
+            alterar_consulta();//Chama e executa a função para alterar uma Consulta
+            break;
+        case 3:
+            cancelar_consulta();//Chama e executa a função para cancelar uma Consulta
+            break;
+        case 4:
+            listar_consulta();//Chama e executa a função para listar Consultas
+            break;
+        case 0:
+            console.log("Saida realizada com Sucesso");
+            return;
+        default:
+             console.log("Opcao invalida. Escolha outra opcao.");
+             break;
+        }
+           
+        menu();// Chama o menu novamente para nova escolha do usuário
+    }
+//*******************************************************************************************
