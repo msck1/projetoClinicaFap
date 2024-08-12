@@ -1,8 +1,6 @@
 import readlineSync from 'readline-sync' // import do readlinesync
-import { inserirMedico, listarMedicoPorCrm, alterarMedicoPeloCrm, excluirMedicoPeloCrm } from './medicos/medico'; // importa do crud medicos
-import { Medico } from './medicos/medico'; // import da classe medico
-import { alterarConsultaPeloCPF, excluirConsultaPeloCPF, inserirConsulta, listarConsultaPeloCPF } from './consulta/consulta' // import de crud consulta
-import { Consulta } from './consulta/consulta' // import da classe consulta
+import { inserirMedico, listarMedicoPorCrm, alterarMedicoPeloCrm, excluirMedicoPeloCrm, Medico } from './medicos/medico'; // importa do crud medicos
+import { alterarConsultaPeloCPF, excluirConsultaPeloCPF, inserirConsulta, listarConsultaPeloCPF, Consulta } from './consulta/consulta' // import de crud consulta
 
 
 
@@ -209,11 +207,7 @@ console.log(`
         switch (opcaoConsulta) {
             case 1:
 
-
                 const datahora = (readlineSync.question("Digite a data e a hora da consulta(FORMATO AAAA-MM-DD HH:MM:SS): "))
-
-                console.log(datahora)
-                
                 const descricao = readlineSync.question("Digite a descricao da consulta: ")
                 const cpf_pacienteConsulta = readlineSync.question("Digite o CPF do paciente: ")
                 const crm_medicoConsulta = readlineSync.question("Digite o CRM do medico: ")
@@ -228,7 +222,6 @@ console.log(`
 
                         console.log('Consulta criada com sucesso:', resultado);
 
-                    
                     }
                     loop();
                 });
@@ -238,7 +231,6 @@ console.log(`
         case 2:
 
                 const cpf_paciente = readlineSync.question("Digite o CPF do paciente que deseja achar a consulta: ");
-                const hora = 10
 
                 listarConsultaPeloCPF(cpf_paciente,  (erro, resultado) => {
 

@@ -59,6 +59,7 @@ function inserirConsulta(consulta, crm_medico, cpf_paciente, callback) {
         }
     });
 }
+// funcao de listar
 function listarConsultaPeloCPF(cpf_paciente, callback) {
     const conexao = (0, db_1.fazerConexao)();
     const buscarConsulta = `SELECT idconsulta, CONVERT_TZ(dataHora_consulta, '+00:00', '-03:00') AS dataHora_consulta, consulta_descricao, medico_id_medico, paciente_idpaciente, nome_paciente, nome_medico FROM consulta INNER JOIN paciente ON idpaciente = paciente_idpaciente INNER JOIN medico ON id_medico = medico_id_medico WHERE cpf_paciente = ?`;

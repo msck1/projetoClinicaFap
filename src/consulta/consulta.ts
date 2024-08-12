@@ -1,6 +1,6 @@
 import mysql from 'mysql2'
 import { fazerConexao } from '../db'
-import { Medico } from '../medicos/medico';
+
 
 
 
@@ -83,7 +83,7 @@ function inserirConsulta(consulta: Consulta, crm_medico:string, cpf_paciente:str
     );
 }
 
-
+// funcao de listar
 function listarConsultaPeloCPF(cpf_paciente:string, callback:(erro: mysql.QueryError | null, resultado?: any) => void) {
 
     
