@@ -1,17 +1,19 @@
 import mysql from 'mysql2'
 import { fazerConexao } from '../db'
+import { Medico } from '../medicos/medico';
+
 
 
 
 class Consulta {
 
     private idconsulta: number;
-    private dataHora_consulta: Date;
+    private dataHora_consulta: string;
     private consulta_descricao: string;
     private medico_id_medico: number;
     private paciente_id_paciente: number;
     
-        constructor (_idconsulta: number, _dataHora_consulta: Date, _consulta_descricao: string, _medico_id_medico: number, _paciente_id_paciente: number) {
+        constructor (_idconsulta: number, _dataHora_consulta: string, _consulta_descricao: string, _medico_id_medico: number, _paciente_id_paciente: number) {
 
             this.idconsulta = _idconsulta;
             this.dataHora_consulta = _dataHora_consulta;
@@ -25,7 +27,7 @@ class Consulta {
             this.idconsulta = _idconsulta
         }
 
-        public setdataHora_consulta(_dataHora_consulta: Date) {
+        public setdataHora_consulta(_dataHora_consulta: string) {
             this.dataHora_consulta = _dataHora_consulta
         }                 
 
@@ -45,7 +47,7 @@ class Consulta {
             return this.idconsulta
         }
 
-        public getdataHora_consulta(): Date {
+        public getdataHora_consulta(): string {
             return this.dataHora_consulta
         }
 
@@ -81,20 +83,41 @@ function inserirConsulta(consulta: Consulta, crm_medico:string, cpf_paciente:str
     );
 }
 
-// resto das funcoes, falta fazer
-function listarConsultaPeloId() {
+
+function listarConsultaPeloCPF(cpf_paciente:string, callback:(erro: mysql.QueryError | null, resultado?: any) => void) {
+
+    
+    const conexao = fazerConexao();
+    const buscarConsulta = `SELECT idconsulta, CONVERT_TZ(dataHora_consulta, '+00:00', '-03:00') AS dataHora_consulta, consulta_descricao, medico_id_medico, paciente_idpaciente, nome_paciente, nome_medico FROM consulta INNER JOIN paciente ON idpaciente = paciente_idpaciente INNER JOIN medico ON id_medico = medico_id_medico WHERE cpf_paciente = ?`
+    conexao.query(buscarConsulta, [cpf_paciente], (erro, resultado) => {
+
+        if (erro) {
+
+            callback(erro);
+
+            
+        } else {
+
+            callback(null, resultado);
+
+            
+        }
+
+    })
+}
+    
+
+
+
+
+function alterarConsultaPeloCPF() {
+
+
+}
+
+function excluirConsultaPeloCPF() {
     
 }
 
-function alterarConsultaPeloID() {
 
-
-}
-
-function excluirConsultaPeloId() {
-    
-}
-
-
-export { inserirConsulta, listarConsultaPeloId, alterarConsultaPeloID, excluirConsultaPeloId }
-export { Consulta }
+export { inserirConsulta, listarConsultaPeloCPF, alterarConsultaPeloCPF, excluirConsultaPeloCPF, Consulta }

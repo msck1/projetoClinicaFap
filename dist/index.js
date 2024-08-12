@@ -6,8 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const readline_sync_1 = __importDefault(require("readline-sync")); // import do readlinesync
 const medico_1 = require("./medicos/medico"); // importa do crud medicos
 const medico_2 = require("./medicos/medico"); // import da classe medico
-const consulta_1 = require("./consulta/consulta");
-const consulta_2 = require("./consulta/consulta");
+const consulta_1 = require("./consulta/consulta"); // import de crud consulta
+const consulta_2 = require("./consulta/consulta"); // import da classe consulta
 function main() {
     function loop() {
         console.log(`
@@ -150,7 +150,8 @@ function main() {
                 const opcaoConsulta = readline_sync_1.default.questionInt("Digite a sua opcao: ");
                 switch (opcaoConsulta) {
                     case 1:
-                        const datahora = new Date(readline_sync_1.default.question("Digite a data e a hora da consulta(FORMATO AAAA-MM-DD HH:MM:SS): "));
+                        const datahora = (readline_sync_1.default.question("Digite a data e a hora da consulta(FORMATO AAAA-MM-DD HH:MM:SS): "));
+                        console.log(datahora);
                         const descricao = readline_sync_1.default.question("Digite a descricao da consulta: ");
                         const cpf_pacienteConsulta = readline_sync_1.default.question("Digite o CPF do paciente: ");
                         const crm_medicoConsulta = readline_sync_1.default.question("Digite o CRM do medico: ");
@@ -166,15 +167,24 @@ function main() {
                         });
                         break;
                     case 2:
-                        (0, consulta_1.listarConsultaPeloId)();
-                        loop();
+                        const cpf_paciente = readline_sync_1.default.question("Digite o CPF do paciente que deseja achar a consulta: ");
+                        const hora = 10;
+                        (0, consulta_1.listarConsultaPeloCPF)(cpf_paciente, (erro, resultado) => {
+                            if (erro) {
+                                console.error('Erro ao listar consulta:', erro);
+                            }
+                            else {
+                                console.log('Consulta encontrada com sucesso:', resultado);
+                            }
+                            loop();
+                        });
                         break;
                     case 3:
-                        (0, consulta_1.alterarConsultaPeloID)();
+                        (0, consulta_1.alterarConsultaPeloCPF)();
                         loop();
                         break;
                     case 4:
-                        (0, consulta_1.excluirConsultaPeloId)();
+                        (0, consulta_1.excluirConsultaPeloCPF)();
                         loop();
                         break;
                     case 5:

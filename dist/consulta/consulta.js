@@ -2,9 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Consulta = void 0;
 exports.inserirConsulta = inserirConsulta;
-exports.listarConsultaPeloId = listarConsultaPeloId;
-exports.alterarConsultaPeloID = alterarConsultaPeloID;
-exports.excluirConsultaPeloId = excluirConsultaPeloId;
+exports.listarConsultaPeloCPF = listarConsultaPeloCPF;
+exports.alterarConsultaPeloCPF = alterarConsultaPeloCPF;
+exports.excluirConsultaPeloCPF = excluirConsultaPeloCPF;
 const db_1 = require("../db");
 class Consulta {
     constructor(_idconsulta, _dataHora_consulta, _consulta_descricao, _medico_id_medico, _paciente_id_paciente) {
@@ -46,6 +46,7 @@ class Consulta {
     }
 }
 exports.Consulta = Consulta;
+// funcao de inserir
 function inserirConsulta(consulta, crm_medico, cpf_paciente, callback) {
     const conexao = (0, db_1.fazerConexao)();
     const inserirConsulta = `INSERT INTO consulta (dataHora_consulta, consulta_descricao, medico_id_medico, paciente_idpaciente) VALUES (?, ?, (SELECT id_medico FROM medico WHERE crm_medico = ?), (SELECT idpaciente FROM paciente WHERE cpf_paciente = ?))`;
@@ -58,9 +59,19 @@ function inserirConsulta(consulta, crm_medico, cpf_paciente, callback) {
         }
     });
 }
-function listarConsultaPeloId() {
+function listarConsultaPeloCPF(cpf_paciente, callback) {
+    const conexao = (0, db_1.fazerConexao)();
+    const buscarConsulta = `SELECT idconsulta, CONVERT_TZ(dataHora_consulta, '+00:00', '-03:00') AS dataHora_consulta, consulta_descricao, medico_id_medico, paciente_idpaciente, nome_paciente, nome_medico FROM consulta INNER JOIN paciente ON idpaciente = paciente_idpaciente INNER JOIN medico ON id_medico = medico_id_medico WHERE cpf_paciente = ?`;
+    conexao.query(buscarConsulta, [cpf_paciente], (erro, resultado) => {
+        if (erro) {
+            callback(erro);
+        }
+        else {
+            callback(null, resultado);
+        }
+    });
 }
-function alterarConsultaPeloID() {
+function alterarConsultaPeloCPF() {
 }
-function excluirConsultaPeloId() {
+function excluirConsultaPeloCPF() {
 }

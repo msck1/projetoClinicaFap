@@ -76,11 +76,11 @@ function listarMedicoPorCrm(crm_medicoBuscar:string, callback:(erro: mysql.Query
 
         if (erro) {
 
-            callback(erro)
+            callback(erro);
             
         } else {
 
-            callback(null, resultado)
+            callback(null, resultado);
             
         }
     })
@@ -129,5 +129,4 @@ function excluirMedicoPeloCrm(crm_medicoExcluir:string, callback:(erro: mysql.Qu
 }
 
 
-export { inserirMedico, listarMedicoPorCrm, alterarMedicoPeloCrm, excluirMedicoPeloCrm  };
-export { Medico }
+export { inserirMedico, listarMedicoPorCrm, alterarMedicoPeloCrm, excluirMedicoPeloCrm, Medico };

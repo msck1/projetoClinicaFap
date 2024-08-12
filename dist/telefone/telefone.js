@@ -1,57 +1,46 @@
+"use strict";
 // const readline = require('readline-sync'); // Permitir a interação síncrona com o usuário através do console
 // import mysql from 'mysql2';
 // import { fazerConexao } from '../db';
-
 // // Declaração da Classe Telefone
 // class Telefone {
 //     private idtelefone_paciente: number;
 //     private residencial_paciente: number;
 //     private celular_paciente: number;
 //     private paciente_id_paciente: number;
-
 //     constructor(_idtelefone_paciente: number, _residencial_paciente: number, _celular_paciente: number, _paciente_id_paciente: number) {
 //         this.idtelefone_paciente = _idtelefone_paciente;
 //         this.residencial_paciente = _residencial_paciente;
 //         this.celular_paciente = _celular_paciente;
 //         this.paciente_id_paciente = _paciente_id_paciente;
 //     }
-
 //     // Setters
-   
 //         setIdTelefonePaciente(_idtelefone_paciente: number) {
 //         this.idtelefone_paciente = _idtelefone_paciente;
 //     }
-
 //         setCelularPaciente(_celular_paciente: number) {
 //         this.celular_paciente = _celular_paciente;
 //     }
-
 //         setResidencialPaciente(_residencial_paciente: number) {
 //         this.residencial_paciente = _residencial_paciente;
 //     }
 //         setPacienteIdPaciente(_paciente_id_paciente: number) {
 //         this.paciente_id_paciente = _paciente_id_paciente;
 //     }
-
 //     // Getters
-   
 //         getIdTelefonePaciente() {
 //         return this.idtelefone_paciente;
 //     }
-    
 //         getCelularPaciente() {
 //         return this.celular_paciente;
 //     }
-
 //         getResidencialPaciente() {
 //         return this.residencial_paciente;
 //     }
 //         getPacienteIdPaciente() {
 //         return this.paciente_id_paciente;
 //     }
-
 // }
-
 // // Função de inserir
 // function inserirTelefonePaciente(telefone: Telefone, callback: (erro: mysql.QueryError | null, resultado?: any) => void) {
 //     const conexao = fazerConexao();
@@ -65,7 +54,6 @@
 //         }
 //     });
 // }
-
 // // Função de listar pelo cpf do Paciente
 // function listarTelefonePorCpfpaciente(paciente_id_paciente: number, callback: (erro: mysql.QueryError | null, resultado?: any) => void) {
 //     const conexao = fazerConexao();
@@ -79,7 +67,6 @@
 //         }
 //     });
 // }
-
 // //Função de alterar pelo Cpf do Paciente
 // function alterarCpfPaciente(telefone: Telefone, callback: (erro: mysql.QueryError | null, resultado?: any) => void) {
 //     const conexao = fazerConexao();
@@ -93,7 +80,6 @@
 //         }
 //     });
 // }
-
 // // Função de excluir
 // function excluirTelefonePorCpfPaciente(idtelefone_paciente: number, callback: (erro: mysql.QueryError | null, resultado?: any) => void) {
 //     const conexao = fazerConexao();
@@ -107,8 +93,5 @@
 //         }
 //     });
 // }
-
-
-
 // export { inserirTelefonePaciente, listarTelefonePorCpfpaciente, alterarTelefonePorCpfPaciente, excluirTelefonePorCpfPaciente };
 // export { Telefone };
