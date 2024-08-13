@@ -72,7 +72,27 @@ function listarConsultaPeloCPF(cpf_paciente, callback) {
         }
     });
 }
-function alterarConsultaPeloCPF() {
+function alterarConsultaPeloCPF(consulta, cpf_paciente, callback) {
+    const conexao = (0, db_1.fazerConexao)();
+    const alterarConsulta = `UPDATE consulta JOIN paciente ON consulta.paciente_idpaciente = paciente.idpaciente SET dataHora_consulta = ?, consulta_descricao = ? WHERE paciente.cpf_paciente = ?`;
+    conexao.query(alterarConsulta, [consulta.getdataHora_consulta(), consulta.getconsulta_descricao(), cpf_paciente], (erro, resultado) => {
+        if (erro) {
+            callback(erro);
+        }
+        else {
+            callback(null, resultado);
+        }
+    });
 }
-function excluirConsultaPeloCPF() {
+function excluirConsultaPeloCPF(cpf_pacienteExcluir, callback) {
+    const conexao = (0, db_1.fazerConexao)();
+    const excluirConsulta = `DELETE consulta FROM consulta JOIN paciente ON consulta.paciente_idpaciente = paciente.idpaciente WHERE paciente.cpf_paciente = ?`;
+    conexao.query(excluirConsulta, [cpf_pacienteExcluir], (erro, resultado) => {
+        if (erro) {
+            callback(erro);
+        }
+        else {
+            callback(null, resultado);
+        }
+    });
 }

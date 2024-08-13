@@ -77,7 +77,7 @@ function main() {
                         });
                         break;
                     case 4:
-                        let medicoCrmExcluir = readline_sync_1.default.question("Digite o CRM do medico que deseja excluir: ");
+                        const medicoCrmExcluir = readline_sync_1.default.question("Digite o CRM do medico que deseja excluir: ");
                         (0, medico_1.excluirMedicoPeloCrm)(medicoCrmExcluir, (erro, resultado) => {
                             if (erro) {
                                 console.error(erro);
@@ -139,16 +139,16 @@ function main() {
 ======================
          MENU
 1. Inserir uma consulta
-2. Listar consulta pelo id
-3. Alterar consulta pelo id
-4. Excluir consulta pelo id
+2. Listar consulta pelo CPF
+3. Alterar consulta pelo CPF
+4. Excluir consulta pelo CPF
 5. Voltar
 ======================
 `);
                 const opcaoConsulta = readline_sync_1.default.questionInt("Digite a sua opcao: ");
                 switch (opcaoConsulta) {
                     case 1:
-                        const datahora = (readline_sync_1.default.question("Digite a data e a hora da consulta(FORMATO AAAA-MM-DD HH:MM:SS): "));
+                        const datahora = readline_sync_1.default.question("Digite a data e a hora da consulta (FORMATO AAAA-MM-DD HH:MM:SS): ");
                         const descricao = readline_sync_1.default.question("Digite a descricao da consulta: ");
                         const cpf_pacienteConsulta = readline_sync_1.default.question("Digite o CPF do paciente: ");
                         const crm_medicoConsulta = readline_sync_1.default.question("Digite o CRM do medico: ");
@@ -176,12 +176,31 @@ function main() {
                         });
                         break;
                     case 3:
-                        (0, consulta_1.alterarConsultaPeloCPF)();
-                        loop();
+                        const cpfBuscarConsulta = readline_sync_1.default.question("Digite o CPF do paciente relacionao a consulta: ");
+                        const dataHoraNova = readline_sync_1.default.question("Digite a nova data e hora da consulta (FORMATO AAAA-MM-DD HH:MM:SS): ");
+                        const descricaoNova = readline_sync_1.default.question("Digite a nova descricao: ");
+                        const consultaAtualizada = new consulta_1.Consulta(0, dataHoraNova, descricaoNova, 0, 0);
+                        (0, consulta_1.alterarConsultaPeloCPF)(consultaAtualizada, cpfBuscarConsulta, (erro, resultado) => {
+                            if (erro) {
+                                console.error(erro);
+                            }
+                            else {
+                                console.log("Consulta atualizada com sucesso: ", resultado);
+                            }
+                            loop();
+                        });
                         break;
                     case 4:
-                        (0, consulta_1.excluirConsultaPeloCPF)();
-                        loop();
+                        const excluirConsultaCPF = readline_sync_1.default.question("Digite o CPF do paciente relacionado a consulta: ");
+                        (0, consulta_1.excluirConsultaPeloCPF)(excluirConsultaCPF, (erro, resultado) => {
+                            if (erro) {
+                                console.error(erro);
+                            }
+                            else {
+                                console.log("Consulta excluida com sucesso: ", resultado);
+                            }
+                            loop();
+                        });
                         break;
                     case 5:
                         loop();
@@ -194,6 +213,33 @@ function main() {
                 // break do switch consulta
                 break;
             case 4:
+                console.log(`
+======================
+         MENU
+1. Inserir uma consulta
+2. Listar consulta pelo CPF
+3. Alterar consulta pelo CPF
+4. Excluir consulta pelo CPF
+5. Voltar
+======================
+`);
+                const opcaoTelefone = readline_sync_1.default.questionInt("Digite a sua opcao: ");
+                switch (opcaoTelefone) {
+                    case 1:
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        break;
+                    case 5:
+                        break;
+                    default:
+                        console.log("Digite um valor valido");
+                        loop();
+                        break;
+                }
                 loop();
                 break;
             case 5:

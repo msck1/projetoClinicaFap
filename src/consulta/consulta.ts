@@ -67,26 +67,28 @@ class Consulta {
 
 // funcao de inserir
 function inserirConsulta(consulta: Consulta, crm_medico:string, cpf_paciente:string, callback: (erro: mysql.QueryError | null, resultado?: any) => void) {
+
     const conexao = fazerConexao();
     const inserirConsulta = `INSERT INTO consulta (dataHora_consulta, consulta_descricao, medico_id_medico, paciente_idpaciente) VALUES (?, ?, (SELECT id_medico FROM medico WHERE crm_medico = ?), (SELECT idpaciente FROM paciente WHERE cpf_paciente = ?))`;
     conexao.query(inserirConsulta,[consulta.getdataHora_consulta(), consulta.getconsulta_descricao(), crm_medico,cpf_paciente],(erro, resultado) => {
-            if (erro) {
 
-                callback(erro);
+        if (erro) {
 
-            } else {
+            callback(erro);
 
-                callback(null, resultado);
+        } else {
 
-            }
+            callback(null, resultado);
+
         }
-    );
+
+    });
+
 }
 
 // funcao de listar
 function listarConsultaPeloCPF(cpf_paciente:string, callback:(erro: mysql.QueryError | null, resultado?: any) => void) {
 
-    
     const conexao = fazerConexao();
     const buscarConsulta = `SELECT idconsulta, CONVERT_TZ(dataHora_consulta, '+00:00', '-03:00') AS dataHora_consulta, consulta_descricao, medico_id_medico, paciente_idpaciente, nome_paciente, nome_medico FROM consulta INNER JOIN paciente ON idpaciente = paciente_idpaciente INNER JOIN medico ON id_medico = medico_id_medico WHERE cpf_paciente = ?`
     conexao.query(buscarConsulta, [cpf_paciente], (erro, resultado) => {
@@ -100,22 +102,50 @@ function listarConsultaPeloCPF(cpf_paciente:string, callback:(erro: mysql.QueryE
 
             callback(null, resultado);
 
+        }
+
+    })
+
+}
+    
+
+function alterarConsultaPeloCPF(consulta: Consulta, cpf_paciente: string, callback: (erro: mysql.QueryError | null, resultado?:any) => void ) {
+
+    const conexao = fazerConexao();
+    const alterarConsulta = `UPDATE consulta JOIN paciente ON consulta.paciente_idpaciente = paciente.idpaciente SET dataHora_consulta = ?, consulta_descricao = ? WHERE paciente.cpf_paciente = ?`
+    conexao.query(alterarConsulta, [consulta.getdataHora_consulta(), consulta.getconsulta_descricao(), cpf_paciente], (erro, resultado) => {
+
+        if (erro) {
+
+            callback(erro);
+            
+        } else {
+
+            callback(null, resultado);
             
         }
 
     })
-}
-    
-
-
-
-
-function alterarConsultaPeloCPF() {
-
 
 }
 
-function excluirConsultaPeloCPF() {
+function excluirConsultaPeloCPF(cpf_pacienteExcluir: string, callback: (erro: mysql.QueryError | null, resultado?:any) => void) {
+
+    const conexao = fazerConexao();
+    const excluirConsulta = `DELETE consulta FROM consulta JOIN paciente ON consulta.paciente_idpaciente = paciente.idpaciente WHERE paciente.cpf_paciente = ?`
+    conexao.query(excluirConsulta, [cpf_pacienteExcluir], (erro, resultado) => {
+
+        if (erro) {
+
+            callback(erro);
+            
+        } else {
+
+            callback(null, resultado);
+            
+        }
+
+    })
     
 }
 
