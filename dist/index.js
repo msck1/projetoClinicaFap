@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const readline_sync_1 = __importDefault(require("readline-sync")); // import do readlinesync
 const medico_1 = require("./medicos/medico"); // importa do crud medicos
 const consulta_1 = require("./consulta/consulta"); // import de crud consulta
+const telefone_1 = require("./telefone/telefone");
 function main() {
     function loop() {
         console.log(`
@@ -243,31 +244,77 @@ function main() {
                 console.log(`
 ======================
          MENU
-1. Inserir uma consulta
-2. Listar consulta pelo CPF
-3. Alterar consulta pelo CPF
-4. Excluir consulta pelo CPF
+1. Inserir um telefone
+2. Listar telefone pelo CPF
+3. Alterar telefone pelo CPF
+4. Excluir telefone pelo CPF
 5. Voltar
 ======================
 `);
                 const opcaoTelefone = readline_sync_1.default.questionInt("Digite a sua opcao: ");
                 switch (opcaoTelefone) {
                     case 1:
+                        const celular_paciente = readline_sync_1.default.questionInt("Digite o numero de celular do paciente: ");
+                        const residencial_paciente = readline_sync_1.default.questionInt("Digite o telefone residencial do paciente: ");
+                        const cpfPacienteTelefone = readline_sync_1.default.question("Digite o CPF do paciente relacionado ao telefone: ");
+                        const telefoneNovo = new telefone_1.Telefone(0, celular_paciente, residencial_paciente, 0);
+                        (0, telefone_1.inserirTelefonePaciente)(telefoneNovo, cpfPacienteTelefone, (erro, resultado) => {
+                            if (erro) {
+                                console.error("Erro ao inserir telefone", erro);
+                            }
+                            else {
+                                console.log("Telefone inserido com sucesso", resultado);
+                            }
+                            loop();
+                        });
                         break;
                     case 2:
+                        const cpfBuscarTelefone = readline_sync_1.default.question("Digite o CPF do paciente relacionado ao telefone: ");
+                        (0, telefone_1.listarTelefonePeloCpfpaciente)(cpfBuscarTelefone, (erro, resultado) => {
+                            if (erro) {
+                                console.error("Erro ao listar telefon:", erro);
+                            }
+                            else {
+                                console.log("Telefone encontrado com sucesso: ", resultado);
+                            }
+                            loop();
+                        });
                         break;
                     case 3:
+                        const celularNovo = readline_sync_1.default.questionInt("Digite o celular novo: ");
+                        const residencialNovo = readline_sync_1.default.questionInt("Digite o telefone residencial novo: ");
+                        const cpfAlterarTelefone = readline_sync_1.default.question("Digite o CPF do paciente relacionado ao telefone: ");
+                        const alterarTelefone = new telefone_1.Telefone(0, residencialNovo, celularNovo, 0);
+                        (0, telefone_1.alterarTelefonePeloCpf)(alterarTelefone, cpfAlterarTelefone, (erro, resultado) => {
+                            if (erro) {
+                                console.error("Erro ao listar telefone:", erro);
+                            }
+                            else {
+                                console.log("Telefone encontrado com sucesso: ", resultado);
+                            }
+                            loop();
+                        });
                         break;
                     case 4:
+                        const cpfExcluirTelefone = readline_sync_1.default.question("Digite o CPF do paciente relacionado aao telefone que deseja excluir: ");
+                        (0, telefone_1.excluirTelefonePeloCpfPaciente)(cpfExcluirTelefone, (erro, resultado) => {
+                            if (erro) {
+                                console.error("Erro ao excluir telefone:", erro);
+                            }
+                            else {
+                                console.log("Telefone excluido com sucesso: ", resultado);
+                            }
+                            loop();
+                        });
                         break;
                     case 5:
+                        loop();
                         break;
                     default:
                         console.log("Digite um valor valido");
                         loop();
                         break;
-                }
-                loop();
+                } // fim do switch telefone
                 break;
             case 5:
                 console.log("Programa finalizado");

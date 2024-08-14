@@ -54,9 +54,9 @@ class Telefone {
 // Função de inserir
 function inserirTelefonePaciente(telefone: Telefone, cpf_paciente:string , callback: (erro: mysql.QueryError | null, resultado?: any) => void) {
     const conexao = fazerConexao();
-    const inserirTelefone = 'INSERT INTO telefone_paciente (celular_paciente, residencial_paciente, paciente_id_paciente) VALUES (?, ?, (SELECT id_paciente FROM paciente WHERE cpf_paciente = ?)))';
+    const inserirTelefone = 'INSERT INTO telefone_paciente (celular_telefone, residencial_telefone, paciente_idpaciente) VALUES (?, ?, (SELECT idpaciente FROM paciente WHERE cpf_paciente = ?))';
     conexao.query(inserirTelefone, [telefone.getCelularPaciente(), telefone.getResidencialPaciente(), cpf_paciente], (erro, resultado) => {
-        conexao.end(); // Fechar a conexão após a operação
+
         if (erro) {
             callback(erro);
         } else {
@@ -66,11 +66,11 @@ function inserirTelefonePaciente(telefone: Telefone, cpf_paciente:string , callb
 }
 
 // Função de listar pelo cpf do Paciente
-function listarTelefonePeloCpfpaciente(paciente_id_paciente: number, callback: (erro: mysql.QueryError | null, resultado?: any) => void) {
+function listarTelefonePeloCpfpaciente(cpf_paciente: string, callback: (erro: mysql.QueryError | null, resultado?: any) => void) {
     const conexao = fazerConexao();
-    const query = 'SELECT * FROM telefone_paciente WHERE paciente_id_paciente = ?';
-    conexao.query(query, [paciente_id_paciente], (erro, resultado) => {
-        conexao.end(); // Fechar a conexão após a operação
+    const query = 'SELECT idtelefone_paciente, residencial_telefone, celular_telefone, idpaciente, nome_paciente FROM telefone_paciente INNER JOIN paciente ON idpaciente = paciente_idpaciente WHERE cpf_paciente = ?';
+    conexao.query(query, [cpf_paciente], (erro, resultado) => {
+        
         if (erro) {
             callback(erro);
         } else {
@@ -80,11 +80,11 @@ function listarTelefonePeloCpfpaciente(paciente_id_paciente: number, callback: (
 }
 
 //Função de alterar pelo Cpf do Paciente
-function alterarTelefonePeloCpf(telefone: Telefone, callback: (erro: mysql.QueryError | null, resultado?: any) => void) {
+function alterarTelefonePeloCpf(telefone: Telefone, cpf_paciente: string, callback: (erro: mysql.QueryError | null, resultado?: any) => void) {
     const conexao = fazerConexao();
-    const alterarTelefone = 'UPDATE telefone_paciente SET idtelefone_paciente = ?, celular_paciente = ?, residencial_paciente = ? WHERE cpf_paciente = ?';
-    conexao.query(alterarTelefone, [telefone.getPacienteIdPaciente(), telefone.getCelularPaciente(), telefone.getResidencialPaciente()], (erro, resultado) => {
-        conexao.end(); // Fechar a conexão após a operação
+    const alterarTelefone = 'UPDATE telefone_paciente JOIN paciente ON telefone_paciente.paciente_idpaciente = paciente.idpaciente SET residencial_telefone = ?, celular_telefone = ? WHERE cpf_paciente = ?';
+    conexao.query(alterarTelefone, [ telefone.getCelularPaciente(), telefone.getResidencialPaciente(), cpf_paciente], (erro, resultado) => {
+        
         if (erro) {
             callback(erro);
         } else {
@@ -94,11 +94,11 @@ function alterarTelefonePeloCpf(telefone: Telefone, callback: (erro: mysql.Query
 }
 
 // Função de excluir
-function excluirTelefonePeloCpfPaciente(idtelefone_paciente: number, callback: (erro: mysql.QueryError | null, resultado?: any) => void) {
+function excluirTelefonePeloCpfPaciente(cpf_paciente: string, callback: (erro: mysql.QueryError | null, resultado?: any) => void) {
     const conexao = fazerConexao();
-    const excluirTelefone = 'DELETE FROM telefone_paciente WHERE cpf_paciente = ?';
-    conexao.query(excluirTelefone, [idtelefone_paciente], (erro, resultado) => {
-        conexao.end(); // Fechar a conexão após a operação
+    const excluirTelefone = 'DELETE telefone_paciente FROM telefone_paciente JOIN paciente ON telefone_paciente.paciente_idpaciente = paciente.idpaciente WHERE paciente.cpf_paciente = ?';
+    conexao.query(excluirTelefone, [cpf_paciente], (erro, resultado) => {
+        
         if (erro) {
             callback(erro);
         } else {
@@ -109,5 +109,4 @@ function excluirTelefonePeloCpfPaciente(idtelefone_paciente: number, callback: (
 
 
 
-export { inserirTelefonePaciente, listarTelefonePeloCpfpaciente, alterarTelefonePeloCpf, excluirTelefonePeloCpfPaciente };
-export { Telefone };
+export { inserirTelefonePaciente, listarTelefonePeloCpfpaciente, alterarTelefonePeloCpf, excluirTelefonePeloCpfPaciente, Telefone };
