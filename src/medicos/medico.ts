@@ -68,7 +68,7 @@ function inserirMedico(medico: Medico, callback:(erro: mysql.QueryError | null, 
 }
 
 // funcao de listar buscando pelo crm
-function listarMedicoPorCrm(crm_medicoBuscar:string, callback:(erro: mysql.QueryError | null, resultado?:any) => void) {
+function listarMedicoPeloCrm(crm_medicoBuscar:string, callback:(erro: mysql.QueryError | null, resultado?:any) => void) {
 
     const conexao = fazerConexao();
     const query = 'SELECT * FROM medico WHERE crm_medico = ?';
@@ -86,6 +86,27 @@ function listarMedicoPorCrm(crm_medicoBuscar:string, callback:(erro: mysql.Query
     })
     
 }
+
+function listarMedicoPelaEspecialidade(medico_especialidade:string, callback:(erro: mysql.QueryError | null, resultado?:any) => void) {
+
+    const conexao = fazerConexao();
+    const query = 'SELECT * FROM medico WHERE especialidade_medico = ?';
+    conexao.query(query, [medico_especialidade],(erro,resultado) => {
+
+        if (erro) {
+
+            callback(erro);
+            
+        } else {
+
+            callback(null, resultado);
+            
+        }
+    })
+    
+}
+
+
 
 // funcao de alterar: busca pelo crm do medico, altera ele por completo
 function alterarMedicoPeloCrm(crm_antigo:string, medico:Medico, callback:(erro: mysql.QueryError | null, resultado?:any) =>  void) {
@@ -129,4 +150,4 @@ function excluirMedicoPeloCrm(crm_medicoExcluir:string, callback:(erro: mysql.Qu
 }
 
 
-export { inserirMedico, listarMedicoPorCrm, alterarMedicoPeloCrm, excluirMedicoPeloCrm, Medico };
+export { inserirMedico, listarMedicoPeloCrm, alterarMedicoPeloCrm, excluirMedicoPeloCrm, listarMedicoPelaEspecialidade, Medico };

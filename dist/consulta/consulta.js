@@ -5,12 +5,14 @@ exports.inserirConsulta = inserirConsulta;
 exports.listarConsultaPeloCPF = listarConsultaPeloCPF;
 exports.alterarConsultaPeloCPF = alterarConsultaPeloCPF;
 exports.excluirConsultaPeloCPF = excluirConsultaPeloCPF;
+exports.listarConsultaPeloCRM = listarConsultaPeloCRM;
 const db_1 = require("../db");
 class Consulta {
-    constructor(_idconsulta, _dataHora_consulta, _consulta_descricao, _medico_id_medico, _paciente_id_paciente) {
+    constructor(_idconsulta, _dataHora_consulta, _consulta_descricao, _forma_pagamento, _medico_id_medico, _paciente_id_paciente) {
         this.idconsulta = _idconsulta;
         this.dataHora_consulta = _dataHora_consulta;
         this.consulta_descricao = _consulta_descricao;
+        this.forma_pagamento = _forma_pagamento;
         this.medico_id_medico = _medico_id_medico;
         this.paciente_id_paciente = _paciente_id_paciente;
     }
@@ -22,6 +24,9 @@ class Consulta {
     }
     setconsulta_descricao(_consulta_descricao) {
         this.consulta_descricao = _consulta_descricao;
+    }
+    setformaa_pagamento(_forma_pagamento) {
+        this.forma_pagamento = _forma_pagamento;
     }
     setmedico_id_medico(_medico_id_medico) {
         this.medico_id_medico = _medico_id_medico;
@@ -38,6 +43,9 @@ class Consulta {
     getconsulta_descricao() {
         return this.consulta_descricao;
     }
+    getforma_pagamento() {
+        return this.forma_pagamento;
+    }
     getmedico_id_medico() {
         return this.medico_id_medico;
     }
@@ -49,8 +57,8 @@ exports.Consulta = Consulta;
 // funcao de inserir
 function inserirConsulta(consulta, crm_medico, cpf_paciente, callback) {
     const conexao = (0, db_1.fazerConexao)();
-    const inserirConsulta = `INSERT INTO consulta (dataHora_consulta, consulta_descricao, medico_id_medico, paciente_idpaciente) VALUES (?, ?, (SELECT id_medico FROM medico WHERE crm_medico = ?), (SELECT idpaciente FROM paciente WHERE cpf_paciente = ?))`;
-    conexao.query(inserirConsulta, [consulta.getdataHora_consulta(), consulta.getconsulta_descricao(), crm_medico, cpf_paciente], (erro, resultado) => {
+    const inserirConsulta = `INSERT INTO consulta (dataHora_consulta, consulta_descricao, forma_pagamento, medico_id_medico, paciente_idpaciente) VALUES (?, ?, ?, (SELECT id_medico FROM medico WHERE crm_medico = ?), (SELECT idpaciente FROM paciente WHERE cpf_paciente = ?))`;
+    conexao.query(inserirConsulta, [consulta.getdataHora_consulta(), consulta.getconsulta_descricao(), consulta.getforma_pagamento(), crm_medico, cpf_paciente], (erro, resultado) => {
         if (erro) {
             callback(erro);
         }
@@ -62,8 +70,20 @@ function inserirConsulta(consulta, crm_medico, cpf_paciente, callback) {
 // funcao de listar
 function listarConsultaPeloCPF(cpf_paciente, callback) {
     const conexao = (0, db_1.fazerConexao)();
-    const buscarConsulta = `SELECT idconsulta, CONVERT_TZ(dataHora_consulta, '+00:00', '-03:00') AS dataHora_consulta, consulta_descricao, medico_id_medico, paciente_idpaciente, nome_paciente, nome_medico FROM consulta INNER JOIN paciente ON idpaciente = paciente_idpaciente INNER JOIN medico ON id_medico = medico_id_medico WHERE cpf_paciente = ?`;
+    const buscarConsulta = `SELECT idconsulta, CONVERT_TZ(dataHora_consulta, '+00:00', '-03:00') AS dataHora_consulta, consulta_descricao, forma_pagamento, medico_id_medico, paciente_idpaciente, nome_paciente, nome_medico FROM consulta INNER JOIN paciente ON idpaciente = paciente_idpaciente INNER JOIN medico ON id_medico = medico_id_medico WHERE cpf_paciente = ?`;
     conexao.query(buscarConsulta, [cpf_paciente], (erro, resultado) => {
+        if (erro) {
+            callback(erro);
+        }
+        else {
+            callback(null, resultado);
+        }
+    });
+}
+function listarConsultaPeloCRM(crm_medico, callback) {
+    const conexao = (0, db_1.fazerConexao)();
+    const buscarConsulta = `SELECT idconsulta, CONVERT_TZ(dataHora_consulta, '+00:00', '-03:00') AS dataHora_consulta, consulta_descricao, forma_pagamento, medico_id_medico, paciente_idpaciente, nome_paciente, nome_medico FROM consulta INNER JOIN paciente ON idpaciente = paciente_idpaciente INNER JOIN medico ON id_medico = medico_id_medico WHERE crm_medico = ?`;
+    conexao.query(buscarConsulta, [crm_medico], (erro, resultado) => {
         if (erro) {
             callback(erro);
         }
@@ -74,8 +94,8 @@ function listarConsultaPeloCPF(cpf_paciente, callback) {
 }
 function alterarConsultaPeloCPF(consulta, cpf_paciente, callback) {
     const conexao = (0, db_1.fazerConexao)();
-    const alterarConsulta = `UPDATE consulta JOIN paciente ON consulta.paciente_idpaciente = paciente.idpaciente SET dataHora_consulta = ?, consulta_descricao = ? WHERE paciente.cpf_paciente = ?`;
-    conexao.query(alterarConsulta, [consulta.getdataHora_consulta(), consulta.getconsulta_descricao(), cpf_paciente], (erro, resultado) => {
+    const alterarConsulta = `UPDATE consulta JOIN paciente ON consulta.paciente_idpaciente = paciente.idpaciente SET dataHora_consulta = ?, consulta_descricao = ?, forma_pagamento = ? WHERE paciente.cpf_paciente = ?`;
+    conexao.query(alterarConsulta, [consulta.getdataHora_consulta(), consulta.getconsulta_descricao(), consulta.getforma_pagamento(), cpf_paciente], (erro, resultado) => {
         if (erro) {
             callback(erro);
         }

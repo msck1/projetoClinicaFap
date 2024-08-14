@@ -59,7 +59,7 @@ function inserirTelefonePaciente(telefone, cpf_paciente, callback) {
 // Função de listar pelo cpf do Paciente
 function listarTelefonePeloCpfpaciente(paciente_id_paciente, callback) {
     const conexao = (0, db_1.fazerConexao)();
-    const query = 'SELECT * FROM telefone WHERE paciente_id_paciente = ?';
+    const query = 'SELECT * FROM telefone_paciente WHERE paciente_id_paciente = ?';
     conexao.query(query, [paciente_id_paciente], (erro, resultado) => {
         conexao.end(); // Fechar a conexão após a operação
         if (erro) {
@@ -73,7 +73,7 @@ function listarTelefonePeloCpfpaciente(paciente_id_paciente, callback) {
 //Função de alterar pelo Cpf do Paciente
 function alterarTelefonePeloCpf(telefone, callback) {
     const conexao = (0, db_1.fazerConexao)();
-    const alterarTelefone = 'UPDATE telefone SET idtelefone_paciente = ?, celular_paciente = ?, residencial_paciente = ? WHERE cpf_paciente = ?';
+    const alterarTelefone = 'UPDATE telefone_paciente SET idtelefone_paciente = ?, celular_paciente = ?, residencial_paciente = ? WHERE cpf_paciente = ?';
     conexao.query(alterarTelefone, [telefone.getPacienteIdPaciente(), telefone.getCelularPaciente(), telefone.getResidencialPaciente()], (erro, resultado) => {
         conexao.end(); // Fechar a conexão após a operação
         if (erro) {
@@ -87,7 +87,7 @@ function alterarTelefonePeloCpf(telefone, callback) {
 // Função de excluir
 function excluirTelefonePeloCpfPaciente(idtelefone_paciente, callback) {
     const conexao = (0, db_1.fazerConexao)();
-    const excluirTelefone = 'DELETE FROM telefone WHERE cpf_paciente = ?';
+    const excluirTelefone = 'DELETE FROM telefone_paciente WHERE cpf_paciente = ?';
     conexao.query(excluirTelefone, [idtelefone_paciente], (erro, resultado) => {
         conexao.end(); // Fechar a conexão após a operação
         if (erro) {

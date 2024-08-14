@@ -4,9 +4,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Medico = void 0;
 exports.inserirMedico = inserirMedico;
-exports.listarMedicoPorCrm = listarMedicoPorCrm;
+exports.listarMedicoPeloCrm = listarMedicoPeloCrm;
 exports.alterarMedicoPeloCrm = alterarMedicoPeloCrm;
 exports.excluirMedicoPeloCrm = excluirMedicoPeloCrm;
+exports.listarMedicoPelaEspecialidade = listarMedicoPelaEspecialidade;
 const db_1 = require("../db");
 class Medico {
     constructor(_id_medico, _nome_medico, _especialidade_medico, _crm_medico) {
@@ -57,10 +58,22 @@ function inserirMedico(medico, callback) {
     });
 }
 // funcao de listar buscando pelo crm
-function listarMedicoPorCrm(crm_medicoBuscar, callback) {
+function listarMedicoPeloCrm(crm_medicoBuscar, callback) {
     const conexao = (0, db_1.fazerConexao)();
     const query = 'SELECT * FROM medico WHERE crm_medico = ?';
     conexao.query(query, [crm_medicoBuscar], (erro, resultado) => {
+        if (erro) {
+            callback(erro);
+        }
+        else {
+            callback(null, resultado);
+        }
+    });
+}
+function listarMedicoPelaEspecialidade(medico_especialidade, callback) {
+    const conexao = (0, db_1.fazerConexao)();
+    const query = 'SELECT * FROM medico WHERE especialidade_medico = ?';
+    conexao.query(query, [medico_especialidade], (erro, resultado) => {
         if (erro) {
             callback(erro);
         }

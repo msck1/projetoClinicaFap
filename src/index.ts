@@ -1,6 +1,6 @@
 import readlineSync from 'readline-sync' // import do readlinesync
-import { inserirMedico, listarMedicoPorCrm, alterarMedicoPeloCrm, excluirMedicoPeloCrm, Medico } from './medicos/medico'; // importa do crud medicos
-import { alterarConsultaPeloCPF, excluirConsultaPeloCPF, inserirConsulta, listarConsultaPeloCPF, Consulta } from './consulta/consulta' // import de crud consulta
+import { inserirMedico, listarMedicoPeloCrm, alterarMedicoPeloCrm, excluirMedicoPeloCrm, Medico, listarMedicoPelaEspecialidade } from './medicos/medico'; // importa do crud medicos
+import { alterarConsultaPeloCPF, excluirConsultaPeloCPF, inserirConsulta, listarConsultaPeloCPF, listarConsultaPeloCRM, Consulta } from './consulta/consulta' // import de crud consulta
 import { inserirTelefonePaciente, listarTelefonePeloCpfpaciente, alterarTelefonePeloCpf, excluirTelefonePeloCpfPaciente, Telefone } from './telefone/telefone';
 
 
@@ -33,9 +33,10 @@ console.log(`
          MENU
 1. Inserir um medico
 2. Listar medico por crm
-3. Alterar um medico pelo crm
-4. Excluir um medico pelo crm
-5. Voltar
+3. Listar medico por especialidade
+4. Alterar um medico pelo crm
+5. Excluir um medico pelo crm
+6. Voltar
 ======================
 `)
 
@@ -70,7 +71,7 @@ console.log(`
 
                 const medicoCrmBuscar = readlineSync.question("Digite o CRM do medico: ")
 
-                listarMedicoPorCrm(medicoCrmBuscar, (erro, resultado) => {
+                listarMedicoPeloCrm(medicoCrmBuscar, (erro, resultado) => {
                     
                     if (erro) {
 
@@ -82,11 +83,33 @@ console.log(`
                         
                     }
                     loop();
-                })
+                });
 
             
                 break;
             case 3:
+                
+                const medicoEspecialidade = readlineSync.question("Digite a especialidade do medico: ");
+
+                listarMedicoPelaEspecialidade(medicoEspecialidade, (erro, resultado) => {
+
+                    if (erro) {
+
+                        console.error(erro);
+                        
+                    } else {
+
+                        console.log("Medico atualizado com sucesso", resultado);
+                        
+                    }
+
+                    loop();
+                })
+
+
+                break;
+            case 4:
+
                 const medicoCrmAntigo = readlineSync.question("Digite o CRM do medico que deseja alterar: ")
                 const medicoNomeNovo = readlineSync.question("Digite o nome novo do medico: ")
                 const medicoEspecialidadeNova = readlineSync.question("Digite a especialidade nova: ")
@@ -106,11 +129,10 @@ console.log(`
                     loop();
                 });
 
-
                 break;
-            case 4:
+            case 5:
 
-            const medicoCrmExcluir = readlineSync.question("Digite o CRM do medico que deseja excluir: ")
+                const medicoCrmExcluir = readlineSync.question("Digite o CRM do medico que deseja excluir: ")
 
                 excluirMedicoPeloCrm(medicoCrmExcluir, (erro, resultado) => {
 
@@ -124,10 +146,10 @@ console.log(`
                         
                     }
                     loop();
-                })
+                });
 
                 break;
-            case 5:
+            case 6:
                 loop();
                 break;
             default:
@@ -193,9 +215,10 @@ console.log(`
          MENU
 1. Inserir uma consulta
 2. Listar consulta pelo CPF
-3. Alterar consulta pelo CPF
-4. Excluir consulta pelo CPF
-5. Voltar
+3. Listar consulta pelo CRM
+4. Alterar consulta pelo CPF
+5. Excluir consulta pelo CPF
+6. Voltar
 ======================
 `)
 
@@ -207,9 +230,10 @@ console.log(`
 
                 const datahora = readlineSync.question("Digite a data e a hora da consulta (FORMATO AAAA-MM-DD HH:MM:SS): ");
                 const descricao = readlineSync.question("Digite a descricao da consulta: ");
+                const forma_pagamento = readlineSync.question("Digite a forma de pagamento: ")
                 const cpf_pacienteConsulta = readlineSync.question("Digite o CPF do paciente: ");
                 const crm_medicoConsulta = readlineSync.question("Digite o CRM do medico: ");
-                const novaConsulta = new Consulta(0, datahora, descricao, 0, 0);
+                const novaConsulta = new Consulta(0, datahora, descricao, forma_pagamento, 0, 0);
 
                 inserirConsulta(novaConsulta, crm_medicoConsulta, cpf_pacienteConsulta, (erro, resultado) => {
                     if (erro) {
@@ -248,29 +272,51 @@ console.log(`
             break;
         case 3:
 
-                const cpfBuscarConsulta = readlineSync.question("Digite o CPF do paciente relacionao a consulta: ");
-                const dataHoraNova = readlineSync.question("Digite a nova data e hora da consulta (FORMATO AAAA-MM-DD HH:MM:SS): ");
-                const descricaoNova = readlineSync.question("Digite a nova descricao: ");
-                const consultaAtualizada = new Consulta (0, dataHoraNova, descricaoNova, 0, 0);
-                alterarConsultaPeloCPF(consultaAtualizada, cpfBuscarConsulta, (erro, resultado) => {
+            const crm_medico = readlineSync.question("Digite o CRM do medico relaciado a consulta: ");
+            
+            listarConsultaPeloCRM(crm_medico, (erro, resultado) => {
 
-                    if (erro) {
+                if (erro) {
 
-                        console.error(erro);
-                        
-                    } else {
+                    console.error("Erro ao listar consulta:", erro);
+                    
+                } else {
 
-                        console.log("Consulta atualizada com sucesso: ", resultado);
-                        
-                    }
-                    loop();
-                });
+                    console.log("Consulta encontra com sucesso: ", resultado);
+                    
+                }
+
+                loop();
+            });
 
 
             break;
         case 4:
 
-                const excluirConsultaCPF = readlineSync.question("Digite o CPF do paciente relacionado a consulta: ");
+            const cpfBuscarConsulta = readlineSync.question("Digite o CPF do paciente relacionao a consulta: ");
+            const dataHoraNova = readlineSync.question("Digite a nova data e hora da consulta (FORMATO AAAA-MM-DD HH:MM:SS): ");
+            const descricaoNova = readlineSync.question("Digite a nova descricao: ");
+            const forma_pagamentoNova = readlineSync.question("Digite a forma de pagamento: ")
+            const consultaAtualizada = new Consulta (0, dataHoraNova, descricaoNova, forma_pagamentoNova, 0, 0);
+            alterarConsultaPeloCPF(consultaAtualizada, cpfBuscarConsulta, (erro, resultado) => {
+
+            if (erro) {
+
+                console.error(erro);
+                
+            } else {
+
+                console.log("Consulta atualizada com sucesso: ", resultado);
+                
+            }
+            loop();
+        });
+
+
+            break;
+        case 5:
+
+        const excluirConsultaCPF = readlineSync.question("Digite o CPF do paciente relacionado a consulta: ");
                 
                 excluirConsultaPeloCPF(excluirConsultaCPF, (erro, resultado) => {
 
@@ -285,13 +331,11 @@ console.log(`
                     }
                     loop();
                 });
-
-
+            
             break;
-        case 5:
-
+        case 6:
             loop();
-            break;
+        
         default:
 
             console.log("Digite um valor valido");
