@@ -12,14 +12,14 @@ function main() {
    
 
 console.log(`
-======================
-         MENU
-1. Crud de medico
-2. Crud de paciente
-3. Crud de consulta
-4. Crud de telefones do paciente
+=====================
+    MENU S.G.C.M.
+1. Menu de medico
+2. Menu de paciente
+3. Menu de consulta
+4. Menu de telefones do paciente
 5. Sair do programa
-======================
+=====================
 `)
 
     let opcaoCrud = readlineSync.questionInt("Digite a sua opcao:");
@@ -29,15 +29,15 @@ console.log(`
             case 1:
 
             console.log(`
-======================
-         MENU
+=====================
+    MENU S.G.C.M.
 1. Inserir um medico
 2. Listar medico por crm
 3. Listar medico por especialidade
 4. Alterar um medico pelo crm
 5. Excluir um medico pelo crm
 6. Voltar
-======================
+=====================
 `)
 
     const opcaoMedico = readlineSync.questionInt("Digite a sua opcao:");
@@ -165,14 +165,14 @@ break;
 
             case 2:
 console.log(`
-======================
-         MENU
+=====================
+    MENU S.G.C.M.
 1. Inserir um paciente
 2. Listar paciente pelo CPF
 3. Alterar paciente pelo CPF
 4. Excluir paciente pelo CPF
 5. Voltar
-======================
+=====================
 `)
 
     const opcaoPaciente = readlineSync.questionInt("Digite a sua opcao: ");
@@ -211,15 +211,15 @@ break;
 
             case 3:
 console.log(`
-======================
-         MENU
+=====================
+    MENU S.G.C.M.
 1. Inserir uma consulta
 2. Listar consulta pelo CPF
 3. Listar consulta pelo CRM
 4. Alterar consulta pelo CPF
 5. Excluir consulta pelo CPF
 6. Voltar
-======================
+=====================
 `)
 
     const opcaoConsulta = readlineSync.questionInt("Digite a sua opcao: ");
@@ -348,14 +348,14 @@ break;
             case 4:
 
 console.log(`
-======================
-         MENU
+=====================
+    MENU S.G.C.M.
 1. Inserir um telefone
 2. Listar telefone pelo CPF
 3. Alterar telefone pelo CPF
 4. Excluir telefone pelo CPF
 5. Voltar
-======================
+=====================
 `)
 
     const opcaoTelefone = readlineSync.questionInt("Digite a sua opcao: ");

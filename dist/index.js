@@ -10,14 +10,14 @@ const telefone_1 = require("./telefone/telefone");
 function main() {
     function loop() {
         console.log(`
-======================
-         MENU
-1. Crud de medico
-2. Crud de paciente
-3. Crud de consulta
-4. Crud de telefones do paciente
+=====================
+    MENU S.G.C.M.
+1. Menu de medico
+2. Menu de paciente
+3. Menu de consulta
+4. Menu de telefones do paciente
 5. Sair do programa
-======================
+=====================
 `);
         let opcaoCrud = readline_sync_1.default.questionInt("Digite a sua opcao:");
         switch (opcaoCrud) {
