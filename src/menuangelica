@@ -9,14 +9,13 @@ function main() {
 
     function loop() { // funcao loop para fazer o loop no menu, garante que a conexao com o bd seja feita sem precisar sair do loop, a funcao loop deve ser chamada no fim da funcao crud
         
-        console.log(" ================ FAP - FORMACAO ACELERADA DE PROGRAMACAO ===============");
-        console.log(" =========  PROFESSOR: ANDRE RIBEIRO / DISCIPLINA: JAVA SCRIPT  =========");
         console.log(" =========  S.G.C.M.->  SISTEMA DE GESTÃO DE CLINICAS MÉDICAS  ========= ");
         console.log(" OBJETIVO:Cadastrar,Consultar,Alterar,Remover:MÉDICOS/CONSULTAS/PACIENTES");
-        console.log("\n ================  ESCOLHA UMA OPCAO VALIDA (0 à 3):   ============== \n");
+        console.log("\n ================  ESCOLHA UMA OPCAO VALIDA (0 à 4):   ============== \n");
         console.log("1 - MENU MEDICO");
         console.log("2 - MENU PACIENTE");
         console.log("3 - MENU CONSULTA");
+        console.log("4 - MENU TELEFONE DO PACIENTE");
         console.log("0 - SAIR");
 
     let opcaoCrud = readlineSync.questionInt("Digite a sua opcao:");
