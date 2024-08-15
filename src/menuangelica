@@ -1,11 +1,11 @@
-import readlineSync from 'readline-sync' // import do readlinesync
+import readlineSync from 'readline-sync' // importa do readlinesync
 import { inserirMedico, listarMedicoPeloCrm, alterarMedicoPeloCrm, excluirMedicoPeloCrm, Medico, listarMedicoPelaEspecialidade } from './medicos/medico'; // importa do crud medicos
-import { alterarConsultaPeloCPF, excluirConsultaPeloCPF, inserirConsulta, listarConsultaPeloCPF, listarConsultaPeloCRM, Consulta } from './consulta/consulta' // import de crud consulta
-import { inserirTelefonePaciente, listarTelefonePeloCpfpaciente, alterarTelefonePeloCpf, excluirTelefonePeloCpfPaciente, Telefone } from './telefone/telefone';
+import { alterarConsultaPeloCPF, excluirConsultaPeloCPF, inserirConsulta, listarConsultaPeloCPF, listarConsultaPeloCRM, Consulta } from './consulta/consulta' // importa de crud consulta
+import { inserirTelefonePaciente, listarTelefonePeloCpfpaciente, alterarTelefonePeloCpf, excluirTelefonePeloCpfPaciente, Telefone } from './telefone/telefone';// importa de crud telefone
 
 
 
-function main() {
+function main() {//Menu Principal
 
     function loop() { // funcao loop para fazer o loop no menu, garante que a conexao com o bd seja feita sem precisar sair do loop, a funcao loop deve ser chamada no fim da funcao crud
         
@@ -16,9 +16,9 @@ function main() {
         console.log("2 - MENU PACIENTE");
         console.log("3 - MENU CONSULTA");
         console.log("4 - MENU TELEFONE DO PACIENTE");
-        console.log("0 - SAIR");
+        console.log("0 - SAIR DO PROGRAMA");
 
-    let opcaoCrud = readlineSync.questionInt("Digite a sua opcao:");
+    let opcaoCrud = readlineSync.questionInt("Digite a sua opcao:");//Atribui a variavel opcao, o input do usuario
 
 
         switch (opcaoCrud) {
@@ -38,10 +38,10 @@ function main() {
         switch (opcaoMedico) {
             case 1:
 
-            const nome_medico = readlineSync.question("Digite o nome do medico: ");
-            const especialidade_medico = readlineSync.question("Digite a especialidade do medico: ");
-            const crm_medico = readlineSync.question("Digite o crm do medico: ");
-            const novoMedico = new Medico (0, nome_medico, especialidade_medico, crm_medico,); 
+            const nome_medico = readlineSync.question("Digite o nome do medico: ");//Atribui a variavel nome_medico, o input do usuario
+            const especialidade_medico = readlineSync.question("Digite a especialidade do medico: ");//Atribui a variavel especialidade_medico, o input do usuario
+            const crm_medico = readlineSync.question("Digite o crm do medico: ");//Atribui a variavel crm_medico, o input do usuario
+            const novoMedico = new Medico (0, nome_medico, especialidade_medico, crm_medico,); //Atribui a variavel novomedico, o input do usuario
 
             inserirMedico(novoMedico, (erro, resultado) => {
                 if (erro) {
@@ -61,7 +61,7 @@ function main() {
                 break;
             case 2:
 
-                const medicoCrmBuscar = readlineSync.question("Digite o CRM do medico: ")
+                const medicoCrmBuscar = readlineSync.question("Digite o CRM do medico: ")//;atribui à variável medicoCrmBuscar, o CRM-input do usuario
 
                 listarMedicoPeloCrm(medicoCrmBuscar, (erro, resultado) => {
                     
@@ -81,7 +81,8 @@ function main() {
                 break;
             case 3:
                 
-                const medicoEspecialidade = readlineSync.question("Digite a especialidade do medico: ");
+                const medicoEspecialidade = readlineSync.question("Digite a especialidade do medico: ");atribui à variável medicoEspecialidade, a Especialidade-input do usuario
+
 
                 listarMedicoPelaEspecialidade(medicoEspecialidade, (erro, resultado) => {
 
