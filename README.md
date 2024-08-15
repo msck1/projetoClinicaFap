@@ -1,5 +1,6 @@
-# Instalar modulos readline-sync, mysql2, typescript, @types/node e @types/readline-sync
+# Como rodar:
 
+Instalar modulos:
 npm install readline-sync <br>
 npm install mysql2 <br>
 npm install typescript <br>
