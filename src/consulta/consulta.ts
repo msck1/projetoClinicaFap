@@ -1,7 +1,5 @@
-
 import mysql from 'mysql2'; 
 import { fazerConexao } from '../db'; 
-
 
 class Consulta {
 
