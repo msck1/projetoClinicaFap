@@ -1,13 +1,13 @@
-import readlineSync from 'readline-sync' // import do readlinesync
-import { inserirMedico, listarMedicoPeloCrm, alterarMedicoPeloCrm, excluirMedicoPeloCrm, Medico, listarMedicoPelaEspecialidade } from './medicos/medico'; // importa do crud medicos
-import { alterarConsultaPeloCPF, excluirConsultaPeloCPF, inserirConsulta, listarConsultaPeloCPF, listarConsultaPeloCRM, Consulta } from './consulta/consulta' // import de crud consulta
+import readlineSync from 'readline-sync' 
+import { inserirMedico, listarMedicoPeloCrm, alterarMedicoPeloCrm, excluirMedicoPeloCrm, Medico, listarMedicoPelaEspecialidade } from './medicos/medico'; 
+import { alterarConsultaPeloCPF, excluirConsultaPeloCPF, inserirConsulta, listarConsultaPeloCPF, listarConsultaPeloCRM, Consulta } from './consulta/consulta' 
 import { inserirTelefonePaciente, listarTelefonePeloCpfpaciente, alterarTelefonePeloCpf, excluirTelefonePeloCpfPaciente, Telefone } from './telefone/telefone';
 
 
 
 function main() {
 
-    function loop() { // funcao loop para fazer o loop no menu, garante que a conexao com o bd seja feita sem precisar sair do loop, a funcao loop deve ser chamada no fim da funcao crud
+    function loop() { // funcao loop que simula uma funcao async, é chamada no fim de cada switch case
         
    
 
@@ -44,7 +44,7 @@ console.log(`
 
 
         switch (opcaoMedico) {
-            case 1:
+            case 1: 
 
             const nome_medico = readlineSync.question("Digite o nome do medico: ");
             const especialidade_medico = readlineSync.question("Digite a especialidade do medico: ");
@@ -206,8 +206,6 @@ console.log(`
 }
 // break do switch paciente
 break;
-
-// falta fazer o resto do switch constula,etc...
 
             case 3:
 console.log(`
