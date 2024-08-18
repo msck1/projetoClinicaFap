@@ -2,7 +2,7 @@ import readlineSync from 'readline-sync'
 import { inserirMedico, listarMedicoPeloCrm, alterarMedicoPeloCrm, excluirMedicoPeloCrm, Medico, listarMedicoPelaEspecialidade } from './medicos/medico'; 
 import { alterarConsultaPeloCPF, excluirConsultaPeloCPF, inserirConsulta, listarConsultaPeloCPF, listarConsultaPeloCRM, Consulta } from './consulta/consulta' 
 import { inserirTelefonePaciente, listarTelefonePeloCpfpaciente, alterarTelefonePeloCpf, excluirTelefonePeloCpfPaciente, Telefone } from './telefone/telefone';
-
+import { inserirPaciente, Paciente } from './paciente/paciente';
 
 
 function main() {
@@ -180,7 +180,25 @@ console.log(`
         switch (opcaoPaciente) {
             case 1:
 
-            loop();
+            const nomePaciente = readlineSync.question("Digite o nome do paciente: ");
+            const dataNascimento = readlineSync.question("Digite a data de nascimento (FORMATO AAAA-MM-DD): ");
+            const cpfPaciente = readlineSync.question("Digite o CPF do paciente: ");
+            
+            const novoPaciente = new Paciente (0, nomePaciente, dataNascimento, cpfPaciente);
+
+            inserirPaciente(novoPaciente, (erro, resultado) => {
+
+                if (erro) {
+            
+                    console.error("Erro ao inserir o medico", erro);
+                    
+                } else {
+            
+                    console.log("Medico inserido com sucesso!", resultado);
+                    
+                }
+                loop();
+            });
                 break;
             case 2:
 

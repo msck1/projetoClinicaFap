@@ -6,10 +6,9 @@ exports.listarConsultaPeloCPF = listarConsultaPeloCPF;
 exports.alterarConsultaPeloCPF = alterarConsultaPeloCPF;
 exports.excluirConsultaPeloCPF = excluirConsultaPeloCPF;
 exports.listarConsultaPeloCRM = listarConsultaPeloCRM;
-const db_1 = require("../db"); // Importa a função para estabelecer a conexão com o banco de dados
-// Declaração da Classe Consulta-Representa uma consulta médica com detalhes sobre a data, descrição, forma de pagamento, médico e paciente
+const db_1 = require("../db");
 class Consulta {
-    // Construtor da classe-Instancia um novo objeto Consulta com os valores fornecidos
+    // Construtor da classe, Instancia uma nova Consulta 
     constructor(_idconsulta, _dataHora_consulta, _consulta_descricao, _forma_pagamento, _medico_id_medico, _paciente_id_paciente) {
         this.idconsulta = _idconsulta;
         this.dataHora_consulta = _dataHora_consulta;
@@ -60,71 +59,72 @@ class Consulta {
 exports.Consulta = Consulta;
 // Função para inserir/agendar uma nova consulta-Adiciona uma consulta ao banco de dados com base nos dados fornecidos
 function inserirConsulta(consulta, crm_medico, cpf_paciente, callback) {
-    const conexao = (0, db_1.fazerConexao)(); // Inicia a conexão com o banco de dados
-    // Consulta BD para inserir uma nova consulta na tabela 'consulta'
-    const inserirConsulta = `INSERT INTO consulta (dataHora_consulta, consulta_descricao, forma_pagamento, medico_id_medico, paciente_idpaciente) VALUES (?, ?, ?, (SELECT id_medico FROM medico WHERE crm_medico = ?), (SELECT idpaciente FROM paciente WHERE cpf_paciente = ?))`;
+    const conexao = (0, db_1.fazerConexao)();
+    const inserirConsulta = `INSERT INTO consulta (dataHora_consulta, consulta_descricao, forma_pagamento, medico_id_medico, paciente_idpaciente) VALUES 
+    (?, ?, ?, (SELECT id_medico FROM medico WHERE crm_medico = ?), (SELECT idpaciente FROM paciente WHERE cpf_paciente = ?))`;
     conexao.query(inserirConsulta, [consulta.getdataHora_consulta(), consulta.getconsulta_descricao(), consulta.getforma_pagamento(), crm_medico, cpf_paciente], (erro, resultado) => {
         if (erro) {
-            callback(erro); // Retorna o erro para o callback
+            callback(erro);
         }
         else {
-            callback(null, resultado); // Retorna o resultado para o callback
+            callback(null, resultado);
         }
     });
 }
 // Função para listar consultas pelo CPF do paciente-Busca consultas no banco de dados com base no CPF do paciente
 function listarConsultaPeloCPF(cpf_paciente, callback) {
-    const conexao = (0, db_1.fazerConexao)(); // Inicia a conexão com o banco de dados
-    // Consulta o BD para buscar consultas associadas a um paciente pelo CPF
-    const buscarConsulta = `SELECT idconsulta, CONVERT_TZ(dataHora_consulta, '+00:00', '-03:00') AS dataHora_consulta, consulta_descricao, forma_pagamento, medico_id_medico, paciente_idpaciente, nome_paciente, nome_medico FROM consulta INNER JOIN paciente ON idpaciente = paciente_idpaciente INNER JOIN medico ON id_medico = medico_id_medico WHERE cpf_paciente = ?`;
+    const conexao = (0, db_1.fazerConexao)();
+    const buscarConsulta = `SELECT idconsulta, CONVERT_TZ(dataHora_consulta, '+00:00', '-03:00') AS dataHora_consulta, consulta_descricao, 
+    forma_pagamento, medico_id_medico, paciente_idpaciente, nome_paciente, nome_medico FROM consulta INNER JOIN paciente ON idpaciente = paciente_idpaciente 
+    INNER JOIN medico ON id_medico = medico_id_medico WHERE cpf_paciente = ?`;
     conexao.query(buscarConsulta, [cpf_paciente], (erro, resultado) => {
         if (erro) {
-            callback(erro); // Retorna o erro para o callback
+            callback(erro);
         }
         else {
-            callback(null, resultado); // Retorna o resultado para o callback
+            callback(null, resultado);
         }
     });
 }
 // Função para listar consultas pelo CRM do médico-Busca consultas no banco de dados com base no CRM do médico
 function listarConsultaPeloCRM(crm_medico, callback) {
-    const conexao = (0, db_1.fazerConexao)(); // Inicia a conexão com o banco de dados
-    // Consulta O BD para buscar consultas associadas a um médico pelo CRM
-    const buscarConsulta = `SELECT idconsulta, CONVERT_TZ(dataHora_consulta, '+00:00', '-03:00') AS dataHora_consulta, consulta_descricao, forma_pagamento, medico_id_medico, paciente_idpaciente, nome_paciente, nome_medico FROM consulta INNER JOIN paciente ON idpaciente = paciente_idpaciente INNER JOIN medico ON id_medico = medico_id_medico WHERE crm_medico = ?`;
+    const conexao = (0, db_1.fazerConexao)();
+    const buscarConsulta = `SELECT idconsulta, CONVERT_TZ(dataHora_consulta, '+00:00', '-03:00') AS dataHora_consulta, consulta_descricao, 
+    forma_pagamento, medico_id_medico, paciente_idpaciente, nome_paciente, nome_medico FROM consulta INNER JOIN paciente ON idpaciente = paciente_idpaciente 
+    INNER JOIN medico ON id_medico = medico_id_medico WHERE crm_medico = ?`;
     conexao.query(buscarConsulta, [crm_medico], (erro, resultado) => {
         if (erro) {
-            callback(erro); // Retorna o erro para o callback
+            callback(erro);
         }
         else {
-            callback(null, resultado); // Retorna o resultado para o callback
+            callback(null, resultado);
         }
     });
 }
 // Função para alterar uma consulta pelo CPF do paciente- Atualiza os detalhes da consulta com base no CPF do paciente
 function alterarConsultaPeloCPF(consulta, cpf_paciente, callback) {
-    const conexao = (0, db_1.fazerConexao)(); // Inicia a conexão com o banco de dados
-    // Consulta BD para atualizar uma consulta existente baseada no CPF do paciente
-    const alterarConsulta = `UPDATE consulta JOIN paciente ON consulta.paciente_idpaciente = paciente.idpaciente SET dataHora_consulta = ?, consulta_descricao = ?, forma_pagamento = ? WHERE paciente.cpf_paciente = ?`;
+    const conexao = (0, db_1.fazerConexao)();
+    const alterarConsulta = `UPDATE consulta JOIN paciente ON consulta.paciente_idpaciente = paciente.idpaciente SET dataHora_consulta = ?, 
+    consulta_descricao = ?, forma_pagamento = ? WHERE paciente.cpf_paciente = ?`;
     conexao.query(alterarConsulta, [consulta.getdataHora_consulta(), consulta.getconsulta_descricao(), consulta.getforma_pagamento(), cpf_paciente], (erro, resultado) => {
         if (erro) {
-            callback(erro); // Retorna o erro para o callback
+            callback(erro);
         }
         else {
-            callback(null, resultado); // Retorna o resultado para o callback
+            callback(null, resultado);
         }
     });
 }
 // Função para excluir/cancelar uma consulta pelo CPF do paciente-Remove uma consulta do banco de dados com base no CPF do paciente
 function excluirConsultaPeloCPF(cpf_pacienteExcluir, callback) {
-    const conexao = (0, db_1.fazerConexao)(); // Inicia a conexão com o banco de dados
-    // Consulta BD para excluir uma consulta existente baseada no CPF do paciente
+    const conexao = (0, db_1.fazerConexao)();
     const excluirConsulta = `DELETE consulta FROM consulta JOIN paciente ON consulta.paciente_idpaciente = paciente.idpaciente WHERE paciente.cpf_paciente = ?`;
     conexao.query(excluirConsulta, [cpf_pacienteExcluir], (erro, resultado) => {
         if (erro) {
-            callback(erro); // Retorna o erro para o callback
+            callback(erro);
         }
         else {
-            callback(null, resultado); // Retorna o resultado para o callback
+            callback(null, resultado);
         }
     });
 }

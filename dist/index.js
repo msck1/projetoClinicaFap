@@ -3,10 +3,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const readline_sync_1 = __importDefault(require("readline-sync")); // import do readlinesync
-const medico_1 = require("./medicos/medico"); // importa do crud medicos
-const consulta_1 = require("./consulta/consulta"); // import de crud consulta
+const readline_sync_1 = __importDefault(require("readline-sync"));
+const medico_1 = require("./medicos/medico");
+const consulta_1 = require("./consulta/consulta");
 const telefone_1 = require("./telefone/telefone");
+const paciente_1 = require("./paciente/paciente");
 function main() {
     function loop() {
         console.log(`
@@ -23,15 +24,15 @@ function main() {
         switch (opcaoCrud) {
             case 1:
                 console.log(`
-======================
-         MENU
+=====================
+    MENU S.G.C.M.
 1. Inserir um medico
 2. Listar medico por crm
 3. Listar medico por especialidade
 4. Alterar um medico pelo crm
 5. Excluir um medico pelo crm
 6. Voltar
-======================
+=====================
 `);
                 const opcaoMedico = readline_sync_1.default.questionInt("Digite a sua opcao:");
                 switch (opcaoMedico) {
@@ -114,19 +115,31 @@ function main() {
                 break;
             case 2:
                 console.log(`
-======================
-         MENU
+=====================
+    MENU S.G.C.M.
 1. Inserir um paciente
 2. Listar paciente pelo CPF
 3. Alterar paciente pelo CPF
 4. Excluir paciente pelo CPF
 5. Voltar
-======================
+=====================
 `);
                 const opcaoPaciente = readline_sync_1.default.questionInt("Digite a sua opcao: ");
                 switch (opcaoPaciente) {
                     case 1:
-                        loop();
+                        const nomePaciente = readline_sync_1.default.question("Digite o nome do paciente: ");
+                        const dataNascimento = readline_sync_1.default.question("Digite a data de nascimento (FORMATO AAAA-MM-DD): ");
+                        const cpfPaciente = readline_sync_1.default.question("Digite o CPF do paciente: ");
+                        const novoPaciente = new paciente_1.Paciente(0, nomePaciente, dataNascimento, cpfPaciente);
+                        (0, paciente_1.inserirPaciente)(novoPaciente, (erro, resultado) => {
+                            if (erro) {
+                                console.error("Erro ao inserir o medico", erro);
+                            }
+                            else {
+                                console.log("Medico inserido com sucesso!", resultado);
+                            }
+                            loop();
+                        });
                         break;
                     case 2:
                         loop();
@@ -147,18 +160,17 @@ function main() {
                 }
                 // break do switch paciente
                 break;
-            // falta fazer o resto do switch constula,etc...
             case 3:
                 console.log(`
-======================
-         MENU
+=====================
+    MENU S.G.C.M.
 1. Inserir uma consulta
 2. Listar consulta pelo CPF
 3. Listar consulta pelo CRM
 4. Alterar consulta pelo CPF
 5. Excluir consulta pelo CPF
 6. Voltar
-======================
+=====================
 `);
                 const opcaoConsulta = readline_sync_1.default.questionInt("Digite a sua opcao: ");
                 switch (opcaoConsulta) {
@@ -242,14 +254,14 @@ function main() {
                 break;
             case 4:
                 console.log(`
-======================
-         MENU
+=====================
+    MENU S.G.C.M.
 1. Inserir um telefone
 2. Listar telefone pelo CPF
 3. Alterar telefone pelo CPF
 4. Excluir telefone pelo CPF
 5. Voltar
-======================
+=====================
 `);
                 const opcaoTelefone = readline_sync_1.default.questionInt("Digite a sua opcao: ");
                 switch (opcaoTelefone) {

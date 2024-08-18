@@ -13,7 +13,7 @@ const config = {
 };
 // funcao que conecta ao banco de dados
 function fazerConexao() {
-    const conexao = mysql2_1.default.createConnection(config); // mysql é do modulo, usa a funcao createConnection com o parametro config 
+    const conexao = mysql2_1.default.createConnection(config);
     conexao.connect((erro) => {
         if (erro) {
             console.error("Erro ao conectar ao banco de dados", erro);
@@ -23,4 +23,3 @@ function fazerConexao() {
     });
     return conexao;
 }
-// No arquivo db.ts, deve ficar apenas a const config e a funcao de fazer a conexa
