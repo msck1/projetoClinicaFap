@@ -142,13 +142,44 @@ function main() {
                         });
                         break;
                     case 2:
-                        loop();
+                        const pacienteCpfBuscar = readline_sync_1.default.question("Digite o CPF do paciente: ");
+                        (0, paciente_1.listarPacientePeloCpf)(pacienteCpfBuscar, (erro, resultado) => {
+                            if (erro) {
+                                console.error("Erro ao buscar o medico", erro);
+                            }
+                            else {
+                                console.log("Medico encontrado com sucesso", resultado);
+                            }
+                            loop();
+                        });
                         break;
                     case 3:
-                        loop();
+                        const pacienteCpfAntigo = readline_sync_1.default.question("Digite o CPF do paciente que deseja alterar: ");
+                        const pacienteNomeNovo = readline_sync_1.default.question("Digite o nome novo do paciente: ");
+                        const pacienteNovaDataNascimento = readline_sync_1.default.question("Digite a nova data de nascimento do paciente: ");
+                        const pacienteCpfNovo = readline_sync_1.default.question("Digite o CPF novo do paciente: ");
+                        const pacienteAtualizado = new paciente_1.Paciente(0, pacienteNomeNovo, pacienteNovaDataNascimento, pacienteCpfNovo);
+                        (0, paciente_1.alterarPacientePeloCpf)(pacienteCpfAntigo, pacienteAtualizado, (erro, resultado) => {
+                            if (erro) {
+                                console.error(erro);
+                            }
+                            else {
+                                console.log("Medico atualizado com sucesso", resultado);
+                            }
+                            loop();
+                        });
                         break;
                     case 4:
-                        loop();
+                        const pacienteCpfExcluir = readline_sync_1.default.question("Digite o CPF do paciente que deseja excluir: ");
+                        (0, paciente_1.excluirPacientePeloCpf)(pacienteCpfExcluir, (erro, resultado) => {
+                            if (erro) {
+                                console.error(erro);
+                            }
+                            else {
+                                console.log("Medico excluido com sucesso: ", resultado);
+                            }
+                            loop();
+                        });
                         break;
                     case 5:
                         loop();

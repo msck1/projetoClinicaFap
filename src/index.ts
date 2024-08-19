@@ -2,7 +2,7 @@ import readlineSync from 'readline-sync'
 import { inserirMedico, listarMedicoPeloCrm, alterarMedicoPeloCrm, excluirMedicoPeloCrm, Medico, listarMedicoPelaEspecialidade } from './medicos/medico'; 
 import { alterarConsultaPeloCPF, excluirConsultaPeloCPF, inserirConsulta, listarConsultaPeloCPF, listarConsultaPeloCRM, Consulta } from './consulta/consulta' 
 import { inserirTelefonePaciente, listarTelefonePeloCpfpaciente, alterarTelefonePeloCpf, excluirTelefonePeloCpfPaciente, Telefone } from './telefone/telefone';
-import { inserirPaciente, Paciente } from './paciente/paciente';
+import { alterarPacientePeloCpf, excluirPacientePeloCpf, inserirPaciente, listarPacientePeloCpf, Paciente } from './paciente/paciente';
 
 
 function main() {
@@ -161,8 +161,6 @@ console.log(`
 // break do switch medico
 break;
 
-
-
             case 2:
 console.log(`
 =====================
@@ -201,17 +199,65 @@ console.log(`
             });
                 break;
             case 2:
+                    const pacienteCpfBuscar = readlineSync.question("Digite o CPF do paciente: ");
 
-            loop();
-                break;
+                    listarPacientePeloCpf(pacienteCpfBuscar, (erro, resultado) => {
+
+                        if (erro) {
+
+                            console.error("Erro ao buscar o medico", erro);
+                            
+                        } else {
+    
+                            console.log("Medico encontrado com sucesso", resultado);
+                            
+                        }
+                        loop();
+                    });
+                    break;
+
             case 3:
+                    const pacienteCpfAntigo = readlineSync.question("Digite o CPF do paciente que deseja alterar: ");
+                    const pacienteNomeNovo = readlineSync.question("Digite o nome novo do paciente: ");
+                    const pacienteNovaDataNascimento = readlineSync.question("Digite a nova data de nascimento do paciente: ");
+                    const pacienteCpfNovo = readlineSync.question("Digite o CPF novo do paciente: ");
+                    const pacienteAtualizado = new Paciente(0, pacienteNomeNovo, pacienteNovaDataNascimento, pacienteCpfNovo);
 
-            loop();
-                break;
-            case 4:
+                        alterarPacientePeloCpf(pacienteCpfAntigo, pacienteAtualizado, (erro, resultado) => {
 
-            loop();
-                break;
+                            if (erro) {
+
+                                console.error(erro);
+                                
+                            } else {
+        
+                                console.log("Medico atualizado com sucesso", resultado);
+                                
+                            }
+                            loop();
+
+                        });
+
+                        break;
+                        case 4:
+                            const pacienteCpfExcluir= readlineSync.question("Digite o CPF do paciente que deseja excluir: ");
+
+                            excluirPacientePeloCpf(pacienteCpfExcluir, (erro, resultado) => {
+
+                                if (erro) {
+
+                                    console.error(erro);
+                                    
+                                } else {
+            
+                                    console.log("Medico excluido com sucesso: ",resultado);
+                                    
+                                }
+                                loop();
+
+                            })
+                           
+                            break;
             case 5:
 
             loop();
