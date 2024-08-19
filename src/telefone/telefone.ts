@@ -18,31 +18,31 @@ class Telefone {
 
     // Métodos Setters
 
-    setIdTelefonePaciente(_idtelefone_paciente: number) {  
+    public setIdTelefonePaciente(_idtelefone_paciente: number) {  
         this.idtelefone_paciente = _idtelefone_paciente;
     }
-        setCelularPaciente(_celular_paciente: number) { 
+    public setCelularPaciente(_celular_paciente: number) { 
         this.celular_paciente = _celular_paciente;
     }
-    setResidencialPaciente(_residencial_paciente: number) {
+    public setResidencialPaciente(_residencial_paciente: number) {
         this.residencial_paciente = _residencial_paciente;
     }
-    setPacienteIdPaciente(_paciente_id_paciente: number) {
+    public setPacienteIdPaciente(_paciente_id_paciente: number) {
         this.paciente_id_paciente = _paciente_id_paciente;
     }
 
     // Métodos Getters
 
-    getIdTelefonePaciente() {
+    public getIdTelefonePaciente() {
         return this.idtelefone_paciente;
     }
-       getCelularPaciente() {
+    public getCelularPaciente() {
         return this.celular_paciente;
     }
-        getResidencialPaciente() {
+    public getResidencialPaciente() {
         return this.residencial_paciente;
     }
-    getPacienteIdPaciente() {
+    public getPacienteIdPaciente() {
         return this.paciente_id_paciente;
     }
 }

@@ -14,28 +14,28 @@ class Paciente {
         this.dataNascimento_paciente = _dataNascimento_paciente;
     }
 
-    getIdPaciente():number {
+    public getIdPaciente():number {
         return this.idpaciente;
     }
-    setIdPaciente(_idpaciente:number): void {
+    public setIdPaciente(_idpaciente:number): void {
         this.idpaciente = _idpaciente;
     }
-    getNomePaciente():string {
+    public getNomePaciente():string {
         return this.nome_paciente;
     }
-    setNomePaciente(_nome_paciente:string): void {
+    public setNomePaciente(_nome_paciente:string): void {
         this.nome_paciente = _nome_paciente;
     }
-    getCpfPaciente():string {
+    public getCpfPaciente():string {
         return this.cpf_paciente;
     }
-    setCpfPaciente(_cpf_paciente:string): void {
+    public setCpfPaciente(_cpf_paciente:string): void {
         this.cpf_paciente = _cpf_paciente;
     }
-    getDataNascimentoPaciente():string {
+    public getDataNascimentoPaciente():string {
         return this.dataNascimento_paciente;
     }
-    setDataNascimentoPaciento(_dataNascimento_paciente:string): void {
+    public setDataNascimentoPaciento(_dataNascimento_paciente:string): void {
         this.dataNascimento_paciente = _dataNascimento_paciente;
     }
 }
